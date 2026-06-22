@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>李浩祥 — 广西师范大学 2026届 金融学</title>
+    <style>
+        :root {
+            --ink: #0a1929;
+            --navy: #102840;
+            --navy-light: #1a3d5c;
+            --gold: #b8860b;
+            --gold-light: #d4a84b;
+            --gold-pale: #faf3e3;
+            --bg: #fafaf8;
+            --surface: #ffffff;
+            --text: #1a1a1a;
+            --text-secondary: #4a4a4a;
+            --text-tertiary: #8c8c8c;
+            --border: #e8e5df;
+            --border-light: #f0ede7;
+            --shadow-xs: 0 1px 3px rgba(0,0,0,0.04);
+            --shadow-sm: 0 2px 12px rgba(0,0,0,0.05);
+            --shadow: 0 4px 24px rgba(0,0,0,0.07);
+            --shadow-lg: 0 12px 48px rgba(0,0,0,0.10);
+            --radius: 12px;
+            --radius-lg: 20px;
+            --transition: 0.35s cubic-bezier(0.32, 0.72, 0, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.8;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ── 导航栏 ── */
+        .navbar {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            background: rgba(255,255,255,0.82); backdrop-filter: blur(18px) saturate(1.4);
+            border-bottom: 1px solid transparent; padding: 0 3rem; transition: var(--transition);
+        }
+        .navbar.scrolled {
+            border-bottom-color: var(--border-light);
+            box-shadow: 0 1px 16px rgba(0,0,0,0.04);
+        }
+        .navbar-inner {
+            max-width: 1140px; margin: 0 auto;
+            display: flex; align-items: center; justify-content: space-between; height: 70px;
+        }
+        .nav-logo {
+            font-size: 1.35rem; font-weight: 700; color: var(--ink);
+            letter-spacing: -0.3px; text-decoration: none;
+        }
+        .nav-logo span { color: var(--gold); font-weight: 800; }
+        .nav-links { display: flex; list-style: none; gap: 2.5rem; }
+        .nav-links a {
+            text-decoration: none; color: var(--text-secondary); font-size: 0.88rem;
+            font-weight: 500; letter-spacing: 0.3px; transition: var(--transition); position: relative;
+            padding: 0.3rem 0;
+        }
+        .nav-links a:hover, .nav-links a.active { color: var(--ink); }
+        .nav-links a::after {
+            content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 1.5px;
+            background: var(--gold); transition: var(--transition);
+        }
+        .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+        .nav-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer;
+            background: none; border: none; padding: 6px; }
+        .nav-toggle span { display: block; width: 22px; height: 1.5px; background: var(--ink); border-radius: 1px; transition: var(--transition); }
+
+        /* ── Hero ── */
+        .hero {
+            position: relative; overflow: hidden;
+            padding: 170px 2rem 110px; text-align: center;
+            background: var(--ink); color: #fff;
+        }
+        .hero::before {
+            content: ''; position: absolute; inset: 0;
+            background:
+                radial-gradient(ellipse 80% 60% at 25% 40%, rgba(184,134,11,0.10) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 50% at 72% 25%, rgba(212,168,75,0.06) 0%, transparent 55%),
+                radial-gradient(ellipse 70% 40% at 50% 85%, rgba(255,255,255,0.03) 0%, transparent 50%);
+            animation: heroGlow 16s ease-in-out infinite;
+        }
+        .hero::after {
+            content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+            background: linear-gradient(90deg,transparent,rgba(184,134,11,0.3),transparent);
+        }
+        @keyframes heroGlow {
+            0%,100% { transform: scale(1); }
+            33% { transform: scale(1.03); }
+            66% { transform: scale(1.02,0.98); }
+        }
+        .hero-inner { position: relative; z-index: 1; max-width: 720px; margin: 0 auto; }
+        .hero-avatar {
+            width: 152px; height: 152px; border-radius: 50%; object-fit: cover;
+            border: 3px solid var(--gold-light); box-shadow: 0 0 0 8px rgba(184,134,11,0.12), 0 12px 40px rgba(0,0,0,0.4);
+            margin-bottom: 2rem;
+        }
+        .hero h1 {
+            font-size: 3rem; font-weight: 700; letter-spacing: 4px;
+            margin-bottom: 0.6rem;
+        }
+        .hero .divider {
+            width: 60px; height: 2px; background: var(--gold-light);
+            margin: 0 auto 1.2rem; opacity: 0.7;
+        }
+        .hero .subtitle { font-size: 1.1rem; color: var(--gold-pale); font-weight: 400; letter-spacing: 1px; margin-bottom: 0.3rem; }
+        .hero .school { font-size: 0.95rem; color: rgba(255,255,255,0.6); font-weight: 300; letter-spacing: 0.8px; }
+        .hero-tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.8rem; margin-top: 2rem; }
+        .hero-tag {
+            background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15);
+            color: rgba(255,255,255,0.9); padding: 0.45rem 1.3rem; border-radius: 24px;
+            font-size: 0.82rem; letter-spacing: 0.6px; backdrop-filter: blur(4px);
+        }
+
+        /* ── 通用板块 ── */
+        .section { max-width: 1140px; margin: 0 auto; padding: 90px 2.5rem; }
+        .section-alt { background: #fff; border-top: 1px solid var(--border-light); border-bottom: 1px solid var(--border-light); }
+        .section-title { text-align: center; margin-bottom: 3.5rem; }
+        .section-title h2 {
+            font-size: 1.8rem; color: var(--ink); font-weight: 700;
+            letter-spacing: 1px; display: inline-block; position: relative;
+        }
+        .section-title h2::after {
+            content: ''; position: absolute; bottom: -12px; left: 50%; transform: translateX(-50%);
+            width: 40px; height: 2px; background: var(--gold); border-radius: 1px;
+        }
+        .section-title p {
+            color: var(--text-tertiary); margin-top: 1.4rem; font-size: 0.9rem; letter-spacing: 0.5px;
+        }
+
+        /* ── 关于我 ── */
+        .about-grid { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 4rem; align-items: start; }
+        .about-image-wrapper {
+            position: sticky; top: 110px; border-radius: var(--radius-lg); overflow: hidden;
+            width: 72%; margin: 0 auto;
+            aspect-ratio: 2/3; background: linear-gradient(160deg, var(--navy-light), var(--ink));
+            box-shadow: var(--shadow-lg);
+        }
+        .about-image-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+        .about-content h3 { font-size: 1.55rem; color: var(--ink); margin-bottom: 1.2rem; font-weight: 700; letter-spacing: 0.5px; }
+        .about-content .greeting { font-size: 1rem; color: var(--gold); font-weight: 600; margin-bottom: 0.6rem; letter-spacing: 0.5px; }
+        .about-content p { color: var(--text-secondary); margin-bottom: 1.1rem; font-size: 0.93rem; }
+        .info-list { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-top: 1.8rem; }
+        .info-list li { display: flex; align-items: center; gap: 0.7rem; font-size: 0.88rem; }
+        .info-list .info-icon {
+            width: 40px; height: 40px; border-radius: 12px;
+            background: var(--gold-pale); display: flex;
+            align-items: center; justify-content: center; font-size: 1.05rem; flex-shrink: 0;
+        }
+        .info-list .info-label { color: var(--text-tertiary); font-size: 0.76rem; letter-spacing: 0.3px; }
+
+        /* ── 时间线 ── */
+        .timeline { position: relative; padding-left: 2.5rem; }
+        .timeline::before {
+            content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+            width: 1px; background: linear-gradient(180deg, var(--gold), var(--border) 70%);
+        }
+        .timeline-item { position: relative; margin-bottom: 3rem; padding-left: 2.5rem; }
+        .timeline-item:last-child { margin-bottom: 0; }
+        .timeline-item::before {
+            content: ''; position: absolute; left: -2.5rem; top: 4px;
+            width: 12px; height: 12px; border-radius: 50%;
+            background: #fff; border: 2px solid var(--gold);
+            box-shadow: 0 0 0 4px rgba(184,134,11,0.08);
+        }
+        .timeline-item .year {
+            font-size: 0.8rem; color: var(--gold); font-weight: 700;
+            margin-bottom: 0.25rem; letter-spacing: 0.8px; text-transform: uppercase;
+        }
+        .timeline-item h4 { font-size: 1.1rem; color: var(--ink); margin-bottom: 0.2rem; font-weight: 700; }
+        .timeline-item .org { font-size: 0.88rem; color: var(--text-tertiary); margin-bottom: 0.5rem; }
+        .timeline-item ul { margin-top: 0.5rem; padding-left: 1.2rem; }
+        .timeline-item ul li { color: var(--text-secondary); font-size: 0.86rem; margin-bottom: 0.3rem; }
+
+        /* ── 卡片 ── */
+        .card-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1.25rem; }
+        .card {
+            background: var(--surface); border-radius: var(--radius-lg);
+            padding: 2.2rem 1.6rem; box-shadow: var(--shadow-xs);
+            border: 1px solid var(--border-light); transition: var(--transition); text-align: center;
+            position: relative; overflow: hidden;
+        }
+        .card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+            background: linear-gradient(90deg, var(--gold), var(--gold-light));
+            opacity: 0; transition: var(--transition);
+        }
+        .card:hover::before { opacity: 1; }
+        .card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); border-color: transparent; }
+        .card-icon { font-size: 2.2rem; margin-bottom: 1rem; }
+        .card h4 { font-size: 1.05rem; color: var(--ink); margin-bottom: 1rem; font-weight: 700; letter-spacing: 0.5px; }
+        .card ul { list-style: none; text-align: left; }
+        .card ul li {
+            padding: 0.4rem 0; color: var(--text-secondary); font-size: 0.85rem;
+            border-bottom: 1px solid var(--border-light);
+            transition: var(--transition);
+        }
+        .card ul li:last-child { border-bottom: none; }
+        .card ul li::before { content: '— '; color: var(--gold-light); font-size: 0.7rem; }
+        .card:hover ul li { padding-left: 4px; }
+        .card-featured { border-color: rgba(184,134,11,0.25); background: linear-gradient(180deg, rgba(184,134,11,0.03) 0%, #fff 35%); }
+        .card-featured::before { opacity: 1 !important; }
+
+        /* ── 项目卡片 ── */
+        .project-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+        .project-card {
+            background: var(--surface); border-radius: var(--radius-lg); padding: 2rem;
+            box-shadow: var(--shadow-xs); border: 1px solid var(--border-light);
+            transition: var(--transition); position: relative;
+        }
+        .project-card::after {
+            content: ''; position: absolute; bottom: 0; left: 2rem; right: 2rem; height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold-light), transparent);
+            opacity: 0; transition: var(--transition);
+        }
+        .project-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-3px); }
+        .project-card:hover::after { opacity: 0.6; }
+        .project-card .project-period {
+            font-size: 0.78rem; color: var(--gold); font-weight: 700;
+            letter-spacing: 0.8px; margin-bottom: 0.6rem;
+        }
+        .project-card h4 { font-size: 1.05rem; color: var(--ink); margin-bottom: 0.6rem; font-weight: 700; }
+        .project-card p { color: var(--text-secondary); font-size: 0.86rem; line-height: 1.7; }
+
+        /* ── 联系方式 ── */
+        #contact {
+            background: linear-gradient(175deg, #091520 0%, #0f2538 100%);
+            color: #fff; position: relative;
+        }
+        #contact::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+            background: linear-gradient(90deg,transparent,rgba(184,134,11,0.4),transparent);
+        }
+        #contact .section-title h2 { color: #fff; }
+        #contact .section-title p { color: rgba(255,255,255,0.55); }
+        .contact-grid { display: grid; grid-template-columns: 1fr auto; gap: 4rem; align-items: center; }
+        .contact-info { display: flex; flex-direction: column; gap: 0.85rem; }
+        .contact-item {
+            display: flex; align-items: center; gap: 1rem;
+            padding: 0.95rem 1.3rem; background: rgba(255,255,255,0.04);
+            border-radius: var(--radius); border: 1px solid rgba(255,255,255,0.08);
+            transition: var(--transition); text-decoration: none; color: #fff;
+        }
+        a.contact-item:hover { background: rgba(255,255,255,0.1); transform: translateX(6px); border-color: rgba(184,134,11,0.3); }
+        .contact-item-icon {
+            width: 44px; height: 44px; border-radius: 12px;
+            background: rgba(184,134,11,0.25); display: flex;
+            align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0;
+        }
+        .contact-item-text .label {
+            font-size: 0.72rem; color: rgba(255,255,255,0.4);
+            text-transform: uppercase; letter-spacing: 1.8px; margin-bottom: 2px;
+        }
+        .contact-item-text .value { font-size: 0.98rem; font-weight: 500; letter-spacing: 0.3px; }
+
+        /* ── 页脚 ── */
+        .footer {
+            text-align: center; padding: 2.5rem;
+            color: rgba(255,255,255,0.35); font-size: 0.78rem;
+            background: #060f18; letter-spacing: 0.5px;
+        }
+
+        /* ── 动画 ── */
+        .fade-in { opacity: 0; transform: translateY(36px); transition: opacity 0.8s ease, transform 0.8s ease; }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+        /* ── 响应式 ── */
+        @media (max-width: 1024px) {
+            .card-grid { grid-template-columns: repeat(3, 1fr); }
+            .project-grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 768px) {
+            .navbar { padding: 0 1.5rem; }
+            .nav-links {
+                display: none; position: absolute; top: 70px; left: 0; right: 0;
+                flex-direction: column; background: rgba(255,255,255,0.98);
+                padding: 1rem 2rem 1.5rem; gap: 1rem;
+                border-bottom: 1px solid var(--border); box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+                backdrop-filter: blur(14px);
+            }
+            .nav-links.open { display: flex; }
+            .nav-toggle { display: flex; }
+            .hero { padding: 130px 1.2rem 70px; }
+            .hero h1 { font-size: 2.2rem; letter-spacing: 2px; }
+            .hero-avatar { width: 120px; height: 120px; }
+            .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .about-image-wrapper { position: static; max-width: 280px; }
+            .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .card-grid { grid-template-columns: 1fr; }
+            .info-list { grid-template-columns: 1fr; }
+            .section { padding: 55px 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ═══════════════ 导航栏 ═══════════════ -->
+<nav class="navbar" id="navbar">
+    <div class="navbar-inner">
+        <a href="#" class="nav-logo">李浩祥<span>.</span></a>
+        <button class="nav-toggle" id="navToggle" aria-label="菜单">
+            <span></span><span></span><span></span>
+        </button>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#home" class="active">首页</a></li>
+            <li><a href="#about">关于我</a></li>
+            <li><a href="#education">教育 & 实习</a></li>
+            <li><a href="#projects">项目经历</a></li>
+            <li><a href="#skills">技能 & 荣誉</a></li>
+            <li><a href="#contact">联系方式</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- ═══════════════ Hero ═══════════════ -->
+<section class="hero" id="home">
+    <div class="hero-inner">
+        <img class="hero-avatar"
+             src="微信图片_20250803114711.jpg"
+             alt="李浩祥"
+             onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22152%22 height=%22152%22%3E%3Crect fill=%22%231a3d5c%22 width=%22152%22 height=%22152%22/%3E%3Ctext x=%2276%22 y=%2282%22 text-anchor=%22middle%22 fill=%22%23d4a84b%22 font-size=%2252%22 font-family=%22sans-serif%22%3E李%3C/text%3E%3C/svg%3E';">
+        <h1>李 浩 祥</h1>
+        <div class="divider"></div>
+        <p class="subtitle">金融学专业 · 2026 届应届毕业生</p>
+        <p class="school">广西师范大学 · 经济管理学院</p>
+        <div class="hero-tags">
+            <span class="hero-tag">证券投资</span>
+            <span class="hero-tag">财务分析</span>
+            <span class="hero-tag">AI 金融工具</span>
+            <span class="hero-tag">金融 Agent 开发</span>
+            <span class="hero-tag">影像制作</span>
+            <span class="hero-tag">沟通协作</span>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════ 关于我 ═══════════════ -->
+<section class="section" id="about">
+    <div class="section-title fade-in">
+        <h2>关于我</h2>
+        <p>谦虚亲和 · 朴实稳健 · 积极好学</p>
+    </div>
+    <div class="about-grid">
+        <div class="about-image-wrapper fade-in">
+            <img src="微信图片_20250803114711.jpg" alt="李浩祥"
+                 style="width:100%;height:100%;object-fit:cover;"
+                 onerror="this.parentElement.innerHTML='<div style=text-align:center;color:rgba(255,255,255,0.6);padding-top:60%;font-size:1rem;>📸</div>';">
+        </div>
+        <div class="about-content fade-in">
+            <p class="greeting">你好，很高兴认识你</p>
+            <h3>我是李浩祥，金融学应届毕业生</h3>
+            <p>
+                就读于<strong>广西师范大学经济管理学院金融学专业</strong>，将于 2026 年 7 月毕业。在校期间系统学习了<strong>公司金融、投资学、金融工程、统计学、会计学、财务报表分析、金融风险管理、经济学</strong>等核心课程，具备扎实的金融理论基础与数据分析能力。
+            </p>
+            <p>
+                性格开朗亲和、责任心强，做事稳重细致。具备<strong>宏观经济视野</strong>与<strong>逻辑分析能力</strong>，长期关注财经资讯与资本市场动态。拥有证券及 ETF 实盘交易经验，已建立个人交易逻辑与买入体系，重视仓位管理、风险控制与交易复盘。
+            </p>
+            <p>
+                深度掌握 AI 工具链，熟练运用 <strong>Claude Code、Codex、Hermes</strong> 等前沿 AI 平台，能够高效完成数据检索、处理与深度分析。自主搭建<strong>专属金融 Agent</strong>，实现金融数据的智能采集、清洗、建模与可视化，大幅提升研究效率与决策质量。
+            </p>
+            <p>
+                同时热爱摄影摄像，精通后期制作，具备 TVC 项目全流程统筹经验。
+            </p>
+            <ul class="info-list">
+                <li><div class="info-icon">🎂</div><div><div class="info-label">年龄</div><div>21 岁</div></div></li>
+                <li><div class="info-icon">📍</div><div><div class="info-label">籍贯</div><div>陕西省汉中市</div></div></li>
+                <li><div class="info-icon">🎓</div><div><div class="info-label">学历</div><div>本科 · 金融学</div></div></li>
+                <li><div class="info-icon">📧</div><div><div class="info-label">邮箱</div><div>1486873060@qq.com</div></div></li>
+                <li><div class="info-icon">📱</div><div><div class="info-label">手机</div><div>18891618651</div></div></li>
+                <li><div class="info-icon">🏫</div><div><div class="info-label">在校职务</div><div>班级生活委员</div></div></li>
+                <li><div class="info-icon">🗣</div><div><div class="info-label">普通话</div><div>二级甲等</div></div></li>
+                <li><div class="info-icon">🚗</div><div><div class="info-label">驾照</div><div>C1 驾驶证</div></div></li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════ 教育 & 实习 ═══════════════ -->
+<section class="section-alt" id="education">
+    <div class="section">
+        <div class="section-title fade-in">
+            <h2>教育背景 & 实习经历</h2>
+            <p>学以致用，知行合一</p>
+        </div>
+        <div class="timeline fade-in">
+            <div class="timeline-item">
+                <div class="year">2022.09 — 2026.07</div>
+                <h4>广西师范大学 · 经济管理学院</h4>
+                <div class="org">金融学 本科</div>
+                <ul>
+                    <li>主修：公司金融、投资学、会计学、金融工程、统计学、财务报表分析、金融风险管理、经济学</li>
+                    <li>担任班级生活委员（2024.09 — 2026.06），负责班级日常事务、政策宣传、材料审核及奖学金申报</li>
+                    <li>长期参与校内外宣传活动，善于组织策划行业宣传展示，并进行拍摄制作与推广报道</li>
+                </ul>
+            </div>
+            <div class="timeline-item">
+                <div class="year">2025.09 — 2025.11</div>
+                <h4>东北证券股份有限公司</h4>
+                <div class="org">桂林七星路营业部 · 证券业务实习生</div>
+                <ul>
+                    <li>协助收集更新市场资讯，梳理分析资料数据，按科目分类归档</li>
+                    <li>参加证券业务知识技能培训，协助客户分析财报信息与市场走势，制定投资计划</li>
+                    <li>协助开展客户接待、联络咨询、平台维护和日常事务处理</li>
+                </ul>
+            </div>
+            <div class="timeline-item">
+                <div class="year">2025.07 — 2025.09</div>
+                <h4>广西师范大学出版社集团</h4>
+                <div class="org">市场与财务分析实习生</div>
+                <ul>
+                    <li>协助统计业务线销售及成本数据，参与搭建财务监测模板，识别运营风险</li>
+                    <li>收集整理行业定价策略、渠道信息及竞品动态，深度参与市场调研，编制调研报告</li>
+                    <li>参与编制品牌推广方案，剪辑宣传视频，开展市场促销活动</li>
+                </ul>
+            </div>
+            <div class="timeline-item">
+                <div class="year">2023.01 — 2025.07</div>
+                <h4>校园志愿服务活动</h4>
+                <div class="org">志愿者</div>
+                <ul>
+                    <li>长期投身校园迎新、会务支持、活动宣传等志愿服务，负责现场引导、后勤保障及影像记录</li>
+                    <li>协助略阳县东关小学图书采购项目，参与投资测算、方案制定与项目实施监控</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════ 项目经历 ═══════════════ -->
+<section class="section" id="projects">
+    <div class="section-title fade-in">
+        <h2>项目经历</h2>
+        <p>在实践中锻炼综合能力</p>
+    </div>
+    <div class="project-grid fade-in">
+        <div class="project-card">
+            <div class="project-period">2025.06 — 2025.08</div>
+            <h4>"萨玛驰" TVC 产品宣传片</h4>
+            <p><strong>项目负责人</strong></p>
+            <p>受"萨玛驰"公司委托，全流程统筹新型鞋垫产品宣传 TVC 的策划与制作。负责客户对接、方案制定、团队组建、任务分配、设备协调、拍摄执行及后期剪辑审核。采用 4K 高清拍摄、微距特写、动态结构动画等技术，精准呈现产品缓震科技、透气材质与人体工学设计卖点，最终高质量交付，显著提升品牌市场认知度。</p>
+        </div>
+        <div class="project-card">
+            <div class="project-period">2024.02 — 2024.04</div>
+            <h4>烟草市场调研项目</h4>
+            <p><strong>核心调研成员</strong></p>
+            <p>加入学院"雪茄吧"项目调研组，联络桂林市烟草专卖局，系统开展烟草行业运营模式、市场行情、政策合规及发展趋势调研。负责资料收集、产业链分析、市场趋势研判及风险评估，基于成本收益与供应链管理提出优化建议，形成具有建设性的行业调研报告。</p>
+        </div>
+        <div class="project-card">
+            <div class="project-period">2023.12 — 2024.01</div>
+            <h4>略阳县东关小学图书采购项目</h4>
+            <p><strong>项目组成员</strong></p>
+            <p>根据预算资金，参与方案规划、采购清单制定与分发办法设计。高效组织采购并精准分发 2000 余册图书，资金使用率高达 98%，图书精准覆盖学校三至六年级班级，显著提升图书资源配置效率。</p>
+        </div>
+        <div class="project-card">
+            <div class="project-period">2023.07 — 2023.08</div>
+            <h4>略阳县旅游业发展调研</h4>
+            <p><strong>调研组成员</strong></p>
+            <p>按照略阳县旅游业发展服务中心计划要求，结合旅游宣传活动，深入开展当地旅游业发展调研。协助编制宣传资料、组织文旅活动、拍摄推广影像、开展宣介咨询，分析产业现状与竞争格局，撰写调研报告，为旅游发展提供理论支持。</p>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════ 技能 & 荣誉 ═══════════════ -->
+<section class="section-alt" id="skills">
+    <div class="section">
+        <div class="section-title fade-in">
+            <h2>专业技能与荣誉</h2>
+            <p>持续学习，多维发展</p>
+        </div>
+        <div class="card-grid fade-in">
+            <div class="card card-featured">
+                <div class="card-icon">🤖</div>
+                <h4>AI 工具与金融科技</h4>
+                <ul>
+                    <li>Claude Code / Codex 高效运用</li>
+                    <li>Hermes 数据检索与深度分析</li>
+                    <li>自主搭建专属金融 Agent</li>
+                    <li>金融数据智能采集与清洗</li>
+                    <li>AI 辅助建模与可视化呈现</li>
+                    <li>AI 驱动投研效率提升</li>
+                </ul>
+            </div>
+            <div class="card">
+                <div class="card-icon">💻</div>
+                <h4>专业技能</h4>
+                <ul>
+                    <li>Excel / WPS 数据建模与透视表</li>
+                    <li>Python 基础数据分析</li>
+                    <li>文华 WH6 等专业交易软件</li>
+                    <li>财务报表分析与解读</li>
+                    <li>K 线图与技术指标分析</li>
+                    <li>Notion / Boardmix 流程管理</li>
+                </ul>
+            </div>
+            <div class="card">
+                <div class="card-icon">📜</div>
+                <h4>资格与证书</h4>
+                <ul>
+                    <li>普通话二级甲等</li>
+                    <li>C1 驾驶证</li>
+                </ul>
+            </div>
+            <div class="card">
+                <div class="card-icon">🏆</div>
+                <h4>荣誉奖项</h4>
+                <ul>
+                    <li>第二届"长城杯"ETF 模拟挑战赛第 7 名</li>
+                    <li>（月排名全国第四，校级第一）</li>
+                    <li>第一届"长城杯"ETF 模拟挑战赛第九名</li>
+                    <li>第六届全国大学生财经素养大赛一等奖</li>
+                    <li>全国大学生普通话大赛三等奖</li>
+                </ul>
+            </div>
+            <div class="card">
+                <div class="card-icon">🌟</div>
+                <h4>自我评价</h4>
+                <ul>
+                    <li>宏观经济视野 + 逻辑分析思维</li>
+                    <li>熟练运用 AI 工具赋能金融分析</li>
+                    <li>证券实盘交易经验，纪律性强</li>
+                    <li>文字功底扎实，擅长数据分析</li>
+                    <li>影像拍摄与后期制作能力突出</li>
+                    <li>责任心强，具备服务与大局意识</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════ 联系方式 ═══════════════ -->
+<section id="contact">
+    <div class="section">
+        <div class="section-title fade-in">
+            <h2>联系方式</h2>
+            <p>期待与您的交流合作</p>
+        </div>
+        <div class="contact-grid fade-in">
+            <div class="contact-info">
+                <a class="contact-item" href="mailto:1486873060@qq.com">
+                    <div class="contact-item-icon">✉</div>
+                    <div class="contact-item-text">
+                        <div class="label">电子邮箱</div>
+                        <div class="value">1486873060@qq.com</div>
+                    </div>
+                </a>
+                <a class="contact-item" href="tel:18891618651">
+                    <div class="contact-item-icon">☎</div>
+                    <div class="contact-item-text">
+                        <div class="label">手机号码</div>
+                        <div class="value">188-9161-8651</div>
+                    </div>
+                </a>
+                <div class="contact-item">
+                    <div class="contact-item-icon">✆</div>
+                    <div class="contact-item-text">
+                        <div class="label">微信号</div>
+                        <div class="value">wkwk-Mrt</div>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-item-icon">⌂</div>
+                    <div class="contact-item-text">
+                        <div class="label">所在城市</div>
+                        <div class="value">广西 · 桂林</div>
+                    </div>
+                </div>
+            </div>
+            <canvas id="qrWechat" style="display:block;"></canvas>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════ 页脚 ═══════════════ -->
+<footer class="footer">
+    <p>© 2026 李浩祥 &nbsp;·&nbsp; 广西师范大学经济管理学院金融学专业 &nbsp;·&nbsp; 应届毕业生</p>
+    <p style="margin-top:0.4rem;">感谢您的访问，期待与您进一步交流</p>
+</footer>
+
+<!-- ═══════════════ JavaScript ═══════════════ -->
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+<script>
+(function() {
+    // 生成微信二维码
+    var c = document.getElementById('qrWechat');
+    if (c) {
+        (function draw() {
+            if (typeof QRCode === 'undefined') { setTimeout(draw, 200); return; }
+            new QRCode(c, {
+                text: 'wkwk-Mrt',
+                width: 190, height: 190,
+                colorDark: '#ffffff', colorLight: 'rgba(0,0,0,0)',
+                correctLevel: QRCode.CorrectLevel.M
+            });
+        })();
+    }
+
+    // 导航滚动
+    var navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', function() {
+        navbar.classList.toggle('scrolled', window.scrollY > 10);
+    });
+
+    // 移动端菜单
+    var navToggle = document.getElementById('navToggle');
+    var navLinks = document.getElementById('navLinks');
+    navToggle.addEventListener('click', function() { navLinks.classList.toggle('open'); });
+    navLinks.querySelectorAll('a').forEach(function(l) {
+        l.addEventListener('click', function() { navLinks.classList.remove('open'); });
+    });
+
+    // 导航高亮
+    var sections = document.querySelectorAll('section[id]');
+    window.addEventListener('scroll', function() {
+        var cur = '';
+        sections.forEach(function(s) {
+            if (window.scrollY >= s.offsetTop - 100) cur = s.getAttribute('id');
+        });
+        navLinks.querySelectorAll('a').forEach(function(a) {
+            a.classList.remove('active');
+            if (a.getAttribute('href') === '#' + cur) a.classList.add('active');
+        });
+    });
+
+    // 渐入动画
+    var obs = new IntersectionObserver(function(es) {
+        es.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in').forEach(function(el) { obs.observe(el); });
+})();
+</script>
+</body>
+</html>
