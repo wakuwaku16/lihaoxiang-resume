@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>李浩祥 — 金融学应届毕业生 · 价值投资者 · 个人简历</title>
+    <title>李浩祥 — 广西师范大学金融学 2026届 · 个人简历</title>
     <style>
         :root {
             --ink: #0a1929;
@@ -124,64 +124,55 @@
             color: var(--gold-light); font-weight: 600;
         }
 
-        /* ── Hero 数据指标 ── */
-        .hero-stats { display: flex; justify-content: center; gap: 3rem; margin-top: 2.6rem; flex-wrap: wrap; }
-        .hero-stat { text-align: center; }
-        .hero-stat .stat-number {
-            font-size: 2.6rem; font-weight: 800; letter-spacing: 2px;
-            background: linear-gradient(180deg, #fff 0%, var(--gold-light) 100%);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            background-clip: text; line-height: 1.2;
+        /* ── 投资战绩弹窗 ── */
+        .modal-overlay {
+            position: fixed; inset: 0; z-index: 9999;
+            background: rgba(10,25,41,0.85); backdrop-filter: blur(8px);
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; pointer-events: none; transition: opacity 0.35s ease;
         }
-        .hero-stat .stat-label { font-size: 0.78rem; color: rgba(255,255,255,0.55); letter-spacing: 1px; margin-top: 0.3rem; }
-
-        /* ── 投资实力板块 ── */
-        .invest-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.8rem; }
-        .invest-card {
-            background: var(--surface); border-radius: var(--radius-lg); padding: 2.4rem 2rem;
-            box-shadow: var(--shadow-sm); border: 1px solid var(--border-light);
-            transition: var(--transition); text-align: center; position: relative; overflow: hidden;
+        .modal-overlay.open { opacity: 1; pointer-events: auto; }
+        .modal {
+            background: var(--surface); border-radius: var(--radius-lg);
+            max-width: 820px; width: 92%; max-height: 88vh; overflow-y: auto;
+            padding: 2.8rem 2.5rem; box-shadow: var(--shadow-lg);
+            position: relative;
         }
-        .invest-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
-        .invest-card .invest-icon { font-size: 2.8rem; margin-bottom: 1.2rem; }
-        .invest-card h3 {
-            font-size: 1.15rem; color: var(--ink); font-weight: 700;
-            margin-bottom: 0.7rem; letter-spacing: 0.5px;
+        .modal-close {
+            position: absolute; top: 1.2rem; right: 1.5rem;
+            width: 40px; height: 40px; border-radius: 50%;
+            border: 1px solid var(--border); background: #fff;
+            font-size: 1.2rem; cursor: pointer; color: var(--text-secondary);
+            transition: var(--transition); display: flex; align-items: center; justify-content: center;
         }
-        .invest-card .big-number {
-            font-size: 3rem; font-weight: 800; color: var(--gold);
-            letter-spacing: 1px; line-height: 1.1; margin: 0.5rem 0;
+        .modal-close:hover { background: var(--ink); color: #fff; border-color: var(--ink); }
+        .modal h3 { font-size: 1.4rem; color: var(--ink); margin-bottom: 1.5rem; font-weight: 700; letter-spacing: 0.5px; }
+        .modal-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; margin-bottom: 2rem; }
+        .modal-stat {
+            text-align: center; padding: 1.5rem 1rem; background: var(--gold-pale);
+            border-radius: var(--radius); border: 1px solid rgba(184,134,11,0.15);
         }
-        .invest-card .big-number small { font-size: 1rem; font-weight: 500; color: var(--text-tertiary); }
-        .invest-card p { color: var(--text-secondary); font-size: 0.86rem; line-height: 1.7; }
-        .invest-card.invest-featured {
-            border-color: rgba(184,134,11,0.3);
-            background: linear-gradient(180deg, rgba(184,134,11,0.04) 0%, #fff 40%);
-            box-shadow: var(--shadow);
+        .modal-stat .num { font-size: 2rem; font-weight: 800; color: var(--gold); letter-spacing: 1px; }
+        .modal-stat .lbl { font-size: 0.78rem; color: var(--text-tertiary); margin-top: 0.3rem; letter-spacing: 0.5px; }
+        .modal-images { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-top: 1.2rem; }
+        .modal-images img {
+            width: 100%; border-radius: var(--radius); border: 1px solid var(--border-light);
+            cursor: pointer; transition: var(--transition);
         }
-        .invest-card.invest-featured::before {
-            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
-            background: linear-gradient(90deg, var(--gold), var(--gold-light));
+        .modal-images img:hover { transform: scale(1.02); box-shadow: var(--shadow); }
+        .modal-images .img-placeholder {
+            aspect-ratio: 16/10; background: var(--bg); border-radius: var(--radius);
+            border: 2px dashed var(--border); display: flex; align-items: center;
+            justify-content: center; color: var(--text-tertiary); font-size: 0.85rem;
         }
-
-        /* ── 投资理念引用块 ── */
-        .philosophy-block {
-            max-width: 860px; margin: 3rem auto 0; padding: 2.5rem 3rem;
-            background: linear-gradient(135deg, var(--ink), var(--navy));
-            border-radius: var(--radius-lg); color: #fff; text-align: center;
-            position: relative; border-left: 4px solid var(--gold);
+        .modal .invest-link-btn {
+            display: inline-block; margin-top: 0.6rem; padding: 0.35rem 1rem;
+            background: transparent; border: 1px solid var(--gold); color: var(--gold);
+            border-radius: 20px; font-size: 0.8rem; cursor: pointer;
+            transition: var(--transition); letter-spacing: 0.5px; font-weight: 600;
+            text-decoration: none;
         }
-        .philosophy-block .quote-mark {
-            font-size: 4rem; line-height: 1; color: var(--gold);
-            font-family: Georgia, serif; opacity: 0.5; margin-bottom: -1rem;
-        }
-        .philosophy-block blockquote {
-            font-size: 1.05rem; line-height: 2; letter-spacing: 0.5px;
-            color: rgba(255,255,255,0.85); font-style: italic; margin: 0.6rem 0 1.5rem;
-        }
-        .philosophy-block .philosophy-author {
-            font-size: 0.85rem; color: var(--gold-light); letter-spacing: 1px; font-weight: 500;
-        }
+        .modal .invest-link-btn:hover { background: var(--gold); color: #fff; }
 
 
         /* ── 通用板块 ── */
@@ -339,10 +330,9 @@
         /* ── 响应式 ── */
         @media (max-width: 1024px) {
             .card-grid { grid-template-columns: repeat(2, 1fr); }
-            .invest-grid { grid-template-columns: 1fr; }
             .project-grid { grid-template-columns: 1fr; }
-            .hero-stats { gap: 1.5rem; }
-            .hero-stat .stat-number { font-size: 2rem; }
+            .modal-stats { grid-template-columns: repeat(2, 1fr); }
+            .modal-images { grid-template-columns: 1fr; }
         }
         @media (max-width: 768px) {
             .navbar { padding: 0 1.5rem; }
@@ -362,11 +352,9 @@
             .about-image-wrapper { position: static; max-width: 280px; }
             .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
             .card-grid { grid-template-columns: 1fr; }
-            .invest-grid { grid-template-columns: 1fr; }
-            .philosophy-block { padding: 1.8rem 1.5rem; }
-            .philosophy-block blockquote { font-size: 0.9rem; }
-            .hero-stats { gap: 1rem; }
-            .hero-stat .stat-number { font-size: 1.5rem; letter-spacing: 1px; }
+            .modal-stats { grid-template-columns: 1fr; }
+            .modal-images { grid-template-columns: 1fr; }
+            .modal { padding: 1.8rem 1.2rem; }
             .info-list { grid-template-columns: 1fr; }
             .section { padding: 55px 1.2rem; }
         }
@@ -383,11 +371,11 @@
         </button>
         <ul class="nav-links" id="navLinks">
             <li><a href="#home" class="active">首页</a></li>
-            <li><a href="#investment">投资实力</a></li>
             <li><a href="#about">关于我</a></li>
             <li><a href="#education">教育 & 实习</a></li>
             <li><a href="#projects">项目经历</a></li>
-            <li><a href="#skills">技能 & 荣誉</a></li>
+            <li><a href="#skills">专业技能</a></li>
+            <li><a href="#honors">荣誉奖项</a></li>
             <li><a href="#contact">联系方式</a></li>
         </ul>
     </div>
@@ -402,22 +390,8 @@
              onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22152%22 height=%22152%22%3E%3Crect fill=%22%231a3d5c%22 width=%22152%22 height=%22152%22/%3E%3Ctext x=%2276%22 y=%2282%22 text-anchor=%22middle%22 fill=%22%23d4a84b%22 font-size=%2252%22 font-family=%22sans-serif%22%3E李%3C/text%3E%3C/svg%3E';">
         <h1>李 浩 祥</h1>
         <div class="divider"></div>
-        <p class="subtitle">金融学专业 · 2026 届应届毕业生 · 价值投资者</p>
+        <p class="subtitle">金融学专业 · 2026 届应届毕业生</p>
         <p class="school">广西师范大学 · 经济管理学院</p>
-        <div class="hero-stats">
-            <div class="hero-stat">
-                <div class="stat-number">100%</div>
-                <div class="stat-label">同花顺模拟盘 · 三个月收益</div>
-            </div>
-            <div class="hero-stat">
-                <div class="stat-number">全国第4</div>
-                <div class="stat-label">"长城杯"ETF 挑战赛 · 月排名</div>
-            </div>
-            <div class="hero-stat">
-                <div class="stat-number">攻防组合</div>
-                <div class="stat-label">进攻+防御双板块 · 对冲风险</div>
-            </div>
-        </div>
         <div class="hero-tags">
             <span class="hero-tag highlight">证券投资</span>
             <span class="hero-tag highlight">价值投资</span>
@@ -426,44 +400,6 @@
             <span class="hero-tag">财务分析</span>
             <span class="hero-tag">影像制作</span>
         </div>
-    </div>
-</section>
-
-<!-- ═══════════════ 投资实力 ═══════════════ -->
-<section class="section" id="investment">
-    <div class="section-title fade-in">
-        <h2>投资实力</h2>
-        <p>数据说话 · 体系驱动 · 风控为先</p>
-    </div>
-    <div class="invest-grid fade-in">
-        <div class="invest-card invest-featured">
-            <div class="invest-icon">&#x1F4C8;</div>
-            <h3>模拟盘战绩</h3>
-            <div class="big-number">100%<small> 收益</small></div>
-            <p>同花顺模拟盘<strong>三个月实现 100% 收益</strong>，通过资产组合配置，同时布局进攻与防御板块，有效对冲市场风险。区别于多数选手的全仓重仓策略，以稳健组合管理实现可持续增长。</p>
-        </div>
-        <div class="invest-card">
-            <div class="invest-icon">&#x1F4BC;</div>
-            <h3>实盘交易</h3>
-            <div class="big-number" style="font-size:1.6rem;color:var(--ink);">中际旭创<small> 等龙头标的</small></div>
-            <p>拥有<strong>证券及 ETF 实盘交易经验</strong>，以龙头股和宽基 ETF 为主要交易品种。善于捕捉优质企业价值，典型案例如中际旭创等龙头标的的趋势把握，实战中验证投资逻辑。</p>
-        </div>
-        <div class="invest-card">
-            <div class="invest-icon">&#x1F6E1;</div>
-            <h3>风控体系</h3>
-            <div class="big-number" style="font-size:1.6rem;color:var(--ink);">攻防双板块</div>
-            <p>建立<strong>进攻+防御双板块资产组合</strong>，严格仓位管理，多控仓、多复盘、多分析。拒绝频繁交易，克制人性弱点，以纪律性风控保障收益稳定性，在 ETF 挑战赛中<strong>月排名全国第四</strong>。</p>
-        </div>
-    </div>
-    <!-- 投资理念 -->
-    <div class="philosophy-block fade-in">
-        <div class="quote-mark">&ldquo;</div>
-        <blockquote>
-            拒绝频繁交易，多控仓、多复盘、多分析，克制人性。<br>
-            以<strong>巴菲特芒格式价值投资</strong>为核心理念，专注企业长期价值，建立<strong>自有交易系统与买入逻辑</strong>——<br>
-            好公司 + 好价格 + 长期持有 = 稳健复利。
-        </blockquote>
-        <div class="philosophy-author">—— 我的投资哲学</div>
     </div>
 </section>
 
@@ -595,11 +531,11 @@
     </div>
 </section>
 
-<!-- ═══════════════ 技能 & 荣誉 ═══════════════ -->
+<!-- ═══════════════ 专业技能 ═══════════════ -->
 <section class="section-alt" id="skills">
     <div class="section">
         <div class="section-title fade-in">
-            <h2>专业技能与荣誉</h2>
+            <h2>专业技能</h2>
             <p>投资为核 · AI 赋能 · 多维发展</p>
         </div>
         <div class="card-grid fade-in">
@@ -614,6 +550,7 @@
                     <li>K 线图与技术指标分析</li>
                     <li>文华 WH6 专业交易软件</li>
                 </ul>
+                <button class="invest-link-btn" onclick="openInvestModal()" style="margin-top:0.8rem;">&#x1F4CA; 查看战绩详情</button>
             </div>
             <div class="card">
                 <div class="card-icon">&#x1F916;</div>
@@ -639,38 +576,50 @@
                     <li>影像拍摄与后期制作</li>
                 </ul>
             </div>
-            <div class="card">
-                <div class="card-icon">&#x1F3C6;</div>
-                <h4>荣誉奖项</h4>
-                <ul>
-                    <li>同花顺模拟盘三个月 100% 收益</li>
-                    <li>"长城杯"ETF 挑战赛全国月排名第4</li>
-                    <li>第二届"长城杯"ETF 挑战赛第 7 名</li>
-                    <li>第六届全国大学生财经素养大赛一等奖</li>
-                    <li>第一届"长城杯"ETF 挑战赛第九名</li>
-                </ul>
-            </div>
-            <div class="card">
-                <div class="card-icon">&#x1F4DC;</div>
-                <h4>资格与证书</h4>
-                <ul>
-                    <li>证券从业资格（备考中）</li>
-                    <li>普通话二级甲等</li>
-                    <li>C1 驾驶证</li>
-                </ul>
-            </div>
-            <div class="card">
-                <div class="card-icon">&#x1F31F;</div>
-                <h4>自我评价</h4>
-                <ul>
-                    <li>价值投资理念，纪律性极强</li>
-                    <li>宏观经济视野 + 逻辑分析思维</li>
-                    <li>熟练运用 AI 工具赋能金融分析</li>
-                    <li>证券实盘交易经验，风控优先</li>
-                    <li>文字功底扎实，擅长数据分析</li>
-                    <li>责任心强，具备服务与大局意识</li>
-                </ul>
-            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════ 荣誉奖项 ═══════════════ -->
+<section class="section" id="honors">
+    <div class="section-title fade-in">
+        <h2>荣誉奖项</h2>
+        <p>以赛促学 · 实战验证</p>
+    </div>
+    <div class="card-grid fade-in">
+        <div class="card card-featured">
+            <div class="card-icon">&#x1F3C6;</div>
+            <h4>投资竞赛</h4>
+            <ul>
+                <li>同花顺模拟盘三个月 100% 收益</li>
+                <li>"长城杯"ETF 挑战赛全国月排名第4</li>
+                <li>第二届"长城杯"ETF 挑战赛第 7 名</li>
+                <li>第一届"长城杯"ETF 挑战赛第九名</li>
+                <li>第二届"长城杯"校级第一</li>
+            </ul>
+        </div>
+        <div class="card">
+            <div class="card-icon">&#x1F4DC;</div>
+            <h4>资格与证书</h4>
+            <ul>
+                <li>证券从业资格（备考中）</li>
+                <li>第六届全国大学生财经素养大赛一等奖</li>
+                <li>全国大学生普通话大赛三等奖</li>
+                <li>普通话二级甲等</li>
+                <li>C1 驾驶证</li>
+            </ul>
+        </div>
+        <div class="card">
+            <div class="card-icon">&#x1F31F;</div>
+            <h4>自我评价</h4>
+            <ul>
+                <li>价值投资理念，纪律性极强</li>
+                <li>宏观经济视野 + 逻辑分析思维</li>
+                <li>熟练运用 AI 工具赋能金融分析</li>
+                <li>证券实盘交易经验，风控优先</li>
+                <li>文字功底扎实，擅长数据分析</li>
+                <li>责任心强，具备服务与大局意识</li>
+            </ul>
         </div>
     </div>
 </section>
@@ -719,6 +668,47 @@
 </section>
 
 <!-- ═══════════════ 页脚 ═══════════════ -->
+<!-- ═══════════════ 投资战绩弹窗 ═══════════════ -->
+<div class="modal-overlay" id="investModal">
+    <div class="modal">
+        <button class="modal-close" onclick="closeInvestModal()">&times;</button>
+        <h3>&#x1F4CA; 投资战绩详情</h3>
+        <div class="modal-stats">
+            <div class="modal-stat">
+                <div class="num">100%</div>
+                <div class="lbl">同花顺模拟盘 · 三个月收益</div>
+            </div>
+            <div class="modal-stat">
+                <div class="num">全国第4</div>
+                <div class="lbl">"长城杯"ETF 挑战赛 · 月排名</div>
+            </div>
+            <div class="modal-stat">
+                <div class="num">攻防组合</div>
+                <div class="lbl">进攻+防御双板块 · 对冲风险</div>
+            </div>
+        </div>
+        <p style="color:var(--text-secondary);font-size:0.9rem;line-height:1.8;margin-bottom:1.5rem;">
+            <strong>投资理念：</strong>巴菲特芒格式价值投资，拒绝频繁交易，多控仓、多复盘、多分析，克制人性。以龙头股和宽基 ETF 为主要交易品种，建立<strong>自有交易系统与买入逻辑</strong>——好公司 + 好价格 + 长期持有 = 稳健复利。<br>
+            <strong>交易标的：</strong>中际旭创等龙头个股，善于基本面筛选 + 技术指标判断买卖时机。
+        </p>
+        <p style="color:var(--text-tertiary);font-size:0.78rem;letter-spacing:0.5px;margin-bottom:0.8rem;">📸 战绩截图（点击放大）</p>
+        <div class="modal-images">
+            <a href="0fc6cc8b1c0241de7e0fcd66e4696cb3.jpg" target="_blank">
+                <img src="0fc6cc8b1c0241de7e0fcd66e4696cb3.jpg" alt="投资战绩截图1" style="aspect-ratio:1080/2400;object-fit:cover;" onerror="this.parentElement.innerHTML='<div class=img-placeholder>截图1<br><small>加载失败</small></div>';">
+            </a>
+            <a href="c2b4037ac1e2d6307924be2397a0ef4d.jpg" target="_blank">
+                <img src="c2b4037ac1e2d6307924be2397a0ef4d.jpg" alt="投资战绩截图2" style="aspect-ratio:1440/653;object-fit:cover;" onerror="this.parentElement.innerHTML='<div class=img-placeholder>截图2<br><small>加载失败</small></div>';">
+            </a>
+            <a href="05de72ae0363bc9afb57eb1502b1a111.jpg" target="_blank">
+                <img src="05de72ae0363bc9afb57eb1502b1a111.jpg" alt="投资战绩截图3" style="aspect-ratio:1440/3200;object-fit:cover;" onerror="this.parentElement.innerHTML='<div class=img-placeholder>截图3<br><small>加载失败</small></div>';">
+            </a>
+            <a href="f789d4234c3dd6b4db1b4dd823368d91.jpg" target="_blank">
+                <img src="f789d4234c3dd6b4db1b4dd823368d91.jpg" alt="投资战绩截图4" style="aspect-ratio:1440/3200;object-fit:cover;" onerror="this.parentElement.innerHTML='<div class=img-placeholder>截图4<br><small>加载失败</small></div>';">
+            </a>
+        </div>
+    </div>
+</div>
+
 <footer class="footer">
     <p>© 2026 李浩祥 &nbsp;·&nbsp; 广西师范大学经济管理学院金融学专业 &nbsp;·&nbsp; 价值投资者</p>
     <p style="margin-top:0.4rem;">感谢您的访问，期待与您进一步交流</p>
@@ -774,6 +764,22 @@
         es.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('visible'); });
     }, { threshold: 0.1 });
     document.querySelectorAll('.fade-in').forEach(function(el) { obs.observe(el); });
+
+    // 投资战绩弹窗
+    window.openInvestModal = function() {
+        document.getElementById('investModal').classList.add('open');
+        document.body.style.overflow = 'hidden';
+    };
+    window.closeInvestModal = function() {
+        document.getElementById('investModal').classList.remove('open');
+        document.body.style.overflow = '';
+    };
+    document.getElementById('investModal').addEventListener('click', function(e) {
+        if (e.target === this) closeInvestModal();
+    });
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') closeInvestModal();
+    });
 })();
 </script>
 </body>
