@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>李浩祥 — 广西师范大学金融学 2026届 · 个人简历</title>
     <style>
+        /* ═══════════════ Design Tokens ═══════════════ */
         :root {
             --ink: #0a1929;
             --navy: #102840;
@@ -12,20 +13,24 @@
             --gold: #b8860b;
             --gold-light: #d4a84b;
             --gold-pale: #faf3e3;
+            --gold-wash: rgba(184,134,11,0.06);
             --bg: #fafaf8;
             --surface: #ffffff;
             --text: #1a1a1a;
-            --text-secondary: #4a4a4a;
-            --text-tertiary: #8c8c8c;
+            --text-secondary: #555555;
+            --text-tertiary: #999999;
             --border: #e8e5df;
             --border-light: #f0ede7;
-            --shadow-xs: 0 1px 3px rgba(0,0,0,0.04);
-            --shadow-sm: 0 2px 12px rgba(0,0,0,0.05);
-            --shadow: 0 4px 24px rgba(0,0,0,0.07);
-            --shadow-lg: 0 12px 48px rgba(0,0,0,0.10);
-            --radius: 12px;
+            --shadow-xs: 0 1px 2px rgba(0,0,0,0.04);
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.05);
+            --shadow: 0 4px 20px rgba(0,0,0,0.07);
+            --shadow-lg: 0 16px 48px rgba(0,0,0,0.10);
+            --radius-sm: 10px;
+            --radius: 14px;
             --radius-lg: 20px;
-            --transition: 0.35s cubic-bezier(0.32, 0.72, 0, 1);
+            --ease: cubic-bezier(0.32, 0.72, 0, 1);
+            --transition: 0.35s var(--ease);
+            --transition-fast: 0.2s var(--ease);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -39,42 +44,63 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* ── 导航栏 ── */
+        /* ═══════════════ Navigation ═══════════════ */
         .navbar {
             position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-            background: rgba(255,255,255,0.82); backdrop-filter: blur(18px) saturate(1.4);
-            border-bottom: 1px solid transparent; padding: 0 3rem; transition: var(--transition);
+            background: rgba(255,255,255,0.80); backdrop-filter: blur(20px) saturate(1.5);
+            -webkit-backdrop-filter: blur(20px) saturate(1.5);
+            border-bottom: 1px solid transparent; padding: 0 2rem;
+            transition: all 0.4s var(--ease);
         }
         .navbar.scrolled {
             border-bottom-color: var(--border-light);
-            box-shadow: 0 1px 16px rgba(0,0,0,0.04);
+            box-shadow: 0 1px 12px rgba(0,0,0,0.04);
         }
         .navbar-inner {
-            max-width: 1140px; margin: 0 auto;
-            display: flex; align-items: center; justify-content: space-between; height: 70px;
+            max-width: 1100px; margin: 0 auto;
+            display: flex; align-items: center; justify-content: space-between; height: 68px;
         }
         .nav-logo {
-            font-size: 1.35rem; font-weight: 700; color: var(--ink);
-            letter-spacing: -0.3px; text-decoration: none;
+            font-size: 1.3rem; font-weight: 700; color: var(--ink);
+            letter-spacing: -0.2px; text-decoration: none;
+            display: flex; align-items: center; gap: 2px;
         }
-        .nav-logo span { color: var(--gold); font-weight: 800; }
-        .nav-links { display: flex; list-style: none; gap: 2.5rem; }
+        .nav-logo .dot { color: var(--gold); font-weight: 800; font-size: 1.5rem; line-height: 1; }
+        .nav-links { display: flex; list-style: none; gap: 2.2rem; }
         .nav-links a {
-            text-decoration: none; color: var(--text-secondary); font-size: 0.88rem;
-            font-weight: 500; letter-spacing: 0.3px; transition: var(--transition); position: relative;
-            padding: 0.3rem 0;
+            text-decoration: none; color: var(--text-secondary); font-size: 0.84rem;
+            font-weight: 500; letter-spacing: 0.3px; transition: color 0.3s ease;
+            position: relative; padding: 0.3rem 0;
         }
-        .nav-links a:hover, .nav-links a.active { color: var(--ink); }
         .nav-links a::after {
             content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 1.5px;
-            background: var(--gold); transition: var(--transition);
+            background: var(--gold); transition: width 0.35s var(--ease);
+            border-radius: 1px;
         }
+        .nav-links a:hover, .nav-links a.active { color: var(--ink); }
         .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
-        .nav-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer;
-            background: none; border: none; padding: 6px; }
-        .nav-toggle span { display: block; width: 22px; height: 1.5px; background: var(--ink); border-radius: 1px; transition: var(--transition); }
+        .nav-cta {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 0.45rem 1.1rem; background: var(--gold);
+            color: #fff !important; border-radius: 20px;
+            font-size: 0.8rem; font-weight: 600; letter-spacing: 0.5px;
+            text-decoration: none; transition: all 0.3s ease;
+            white-space: nowrap; margin-left: 0.5rem;
+        }
+        .nav-cta:hover { background: var(--gold-light); transform: translateY(-1px); }
+        .nav-cta svg { width: 15px; height: 15px; }
+        .nav-cta::after { display: none !important; }
+        .nav-toggle {
+            display: none; flex-direction: column; gap: 5px; cursor: pointer;
+            background: none; border: none; padding: 6px;
+        }
+        .nav-toggle span {
+            display: block; width: 22px; height: 1.5px;
+            background: var(--ink); border-radius: 1px;
+            transition: all 0.3s var(--ease);
+        }
 
-        /* ── Hero ── */
+        /* ═══════════════ Hero ═══════════════ */
         .hero {
             position: relative; overflow: hidden;
             padding: 170px 2rem 110px; text-align: center;
@@ -86,48 +112,245 @@
                 radial-gradient(ellipse 80% 60% at 25% 40%, rgba(184,134,11,0.10) 0%, transparent 60%),
                 radial-gradient(ellipse 60% 50% at 72% 25%, rgba(212,168,75,0.06) 0%, transparent 55%),
                 radial-gradient(ellipse 70% 40% at 50% 85%, rgba(255,255,255,0.03) 0%, transparent 50%);
-            animation: heroGlow 16s ease-in-out infinite;
+            animation: heroGlow 30s ease-in-out infinite;
         }
         .hero::after {
             content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
-            background: linear-gradient(90deg,transparent,rgba(184,134,11,0.3),transparent);
+            background: linear-gradient(90deg,transparent,rgba(184,134,11,0.25),transparent);
         }
         @keyframes heroGlow {
-            0%,100% { transform: scale(1); }
-            33% { transform: scale(1.03); }
-            66% { transform: scale(1.02,0.98); }
+            0%,100% { transform: scale(1); opacity: 1; }
+            33% { transform: scale(1.02); opacity: 0.95; }
+            66% { transform: scale(1.01,0.99); opacity: 1; }
         }
         .hero-inner { position: relative; z-index: 1; max-width: 720px; margin: 0 auto; }
         .hero-avatar {
-            width: 152px; height: 152px; border-radius: 50%; object-fit: cover;
-            border: 3px solid var(--gold-light); box-shadow: 0 0 0 8px rgba(184,134,11,0.12), 0 12px 40px rgba(0,0,0,0.4);
-            margin-bottom: 2rem;
+            width: 140px; height: 140px; border-radius: 50%; object-fit: cover;
+            border: 3px solid var(--gold-light);
+            box-shadow: 0 0 0 8px rgba(184,134,11,0.10), 0 20px 50px rgba(0,0,0,0.35);
+            margin-bottom: 2rem; transition: transform 0.5s var(--ease);
         }
+        .hero-avatar:hover { transform: scale(1.04); }
         .hero h1 {
-            font-size: 3rem; font-weight: 700; letter-spacing: 4px;
+            font-size: 3rem; font-weight: 700; letter-spacing: 6px;
             margin-bottom: 0.6rem;
         }
         .hero .divider {
-            width: 60px; height: 2px; background: var(--gold-light);
-            margin: 0 auto 1.2rem; opacity: 0.7;
+            width: 56px; height: 2px; background: var(--gold-light);
+            margin: 0 auto 1.2rem; opacity: 0.65; border-radius: 1px;
         }
-        .hero .subtitle { font-size: 1.1rem; color: var(--gold-pale); font-weight: 400; letter-spacing: 1px; margin-bottom: 0.3rem; }
-        .hero .school { font-size: 0.95rem; color: rgba(255,255,255,0.6); font-weight: 300; letter-spacing: 0.8px; }
-        .hero-tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.8rem; margin-top: 2rem; }
+        .hero .subtitle {
+            font-size: 1.05rem; color: var(--gold-pale); font-weight: 400;
+            letter-spacing: 1.5px; margin-bottom: 0.3rem;
+        }
+        .hero .school {
+            font-size: 0.9rem; color: rgba(255,255,255,0.55);
+            font-weight: 300; letter-spacing: 1px;
+        }
+        .hero-stats {
+            margin-top: 1.4rem; font-size: 0.9rem;
+            color: rgba(255,255,255,0.75); letter-spacing: 0.6px;
+        }
+        .hero-stats strong { color: var(--gold-light); font-weight: 700; }
+        .hero-dl {
+            display: inline-flex; align-items: center; gap: 7px;
+            margin-top: 1.8rem; padding: 0.55rem 1.4rem;
+            background: transparent; border: 1px solid rgba(255,255,255,0.25);
+            color: #fff; border-radius: 24px; font-size: 0.84rem;
+            letter-spacing: 0.6px; cursor: pointer; text-decoration: none;
+            transition: all 0.3s ease; font-family: inherit;
+        }
+        .hero-dl:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.5); }
+        .hero-dl svg { width: 16px; height: 16px; }
+        .hero-tags {
+            display: flex; flex-wrap: wrap; justify-content: center; gap: 0.7rem; margin-top: 2rem;
+        }
         .hero-tag {
-            background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15);
-            color: rgba(255,255,255,0.9); padding: 0.45rem 1.3rem; border-radius: 24px;
-            font-size: 0.82rem; letter-spacing: 0.6px; backdrop-filter: blur(4px);
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12);
+            color: rgba(255,255,255,0.85); padding: 0.4rem 1.2rem; border-radius: 20px;
+            font-size: 0.8rem; letter-spacing: 0.5px;
+            backdrop-filter: blur(4px); transition: all 0.3s ease;
         }
+        .hero-tag:hover { background: rgba(255,255,255,0.10); border-color: rgba(255,255,255,0.25); }
         .hero-tag.highlight {
-            background: rgba(184,134,11,0.25); border-color: rgba(212,168,75,0.4);
+            background: rgba(184,134,11,0.22); border-color: rgba(212,168,75,0.35);
             color: var(--gold-light); font-weight: 600;
         }
+        .hero-tag.highlight:hover { background: rgba(184,134,11,0.32); border-color: rgba(212,168,75,0.55); }
 
-        /* ── 投资战绩弹窗 ── */
+        /* ═══════════════ Section Common ═══════════════ */
+        .section-wrap { max-width: 1100px; margin: 0 auto; padding: 100px 2rem; }
+        .section-alt {
+            background: #fff;
+            border-top: 1px solid var(--border-light);
+            border-bottom: 1px solid var(--border-light);
+        }
+        .section-head { text-align: center; margin-bottom: 3.5rem; }
+        .section-head h2 {
+            font-size: 1.75rem; color: var(--ink); font-weight: 700;
+            letter-spacing: 1.5px; display: inline-block; position: relative;
+        }
+        .section-head h2::after {
+            content: ''; position: absolute; bottom: -12px; left: 50%; transform: translateX(-50%);
+            width: 36px; height: 2px; background: var(--gold); border-radius: 1px;
+        }
+        .section-head p {
+            color: var(--text-tertiary); margin-top: 1.4rem;
+            font-size: 0.88rem; letter-spacing: 0.8px;
+        }
+
+        /* ═══════════════ About ═══════════════ */
+        .about-grid {
+            display: grid; grid-template-columns: 0.85fr 1.15fr; gap: 4rem; align-items: start;
+        }
+        .about-image-wrap {
+            position: sticky; top: 110px; border-radius: var(--radius-lg); overflow: hidden;
+            width: 75%; margin: 0 auto; aspect-ratio: 2/3;
+            background: linear-gradient(160deg, var(--navy-light), var(--ink));
+            box-shadow: var(--shadow-lg); transition: transform 0.4s var(--ease);
+        }
+        .about-image-wrap:hover { transform: translateY(-4px); }
+        .about-image-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .about-text h3 {
+            font-size: 1.5rem; color: var(--ink); margin-bottom: 1rem;
+            font-weight: 700; letter-spacing: 0.5px;
+        }
+        .about-text .greeting {
+            font-size: 0.95rem; color: var(--gold); font-weight: 600;
+            margin-bottom: 0.5rem; letter-spacing: 0.8px;
+        }
+        .about-text p {
+            color: var(--text-secondary); margin-bottom: 1rem;
+            font-size: 0.92rem; line-height: 1.85;
+        }
+        .about-text p strong { color: var(--ink); font-weight: 600; }
+
+        /* info-grid — clean card style */
+        .info-grid {
+            list-style: none; display: grid; grid-template-columns: 1fr 1fr;
+            gap: 0.6rem; margin-top: 1.8rem;
+        }
+        .info-grid li {
+            display: flex; align-items: center; gap: 0.7rem;
+            padding: 0.7rem 0.9rem; border-radius: var(--radius-sm);
+            background: var(--surface); border: 1px solid var(--border-light);
+            font-size: 0.86rem; transition: all 0.3s ease;
+        }
+        .info-grid li:hover { border-color: rgba(184,134,11,0.20); background: var(--gold-wash); }
+        .info-icon {
+            width: 38px; height: 38px; border-radius: 10px; flex-shrink: 0;
+            background: var(--gold-pale); display: flex;
+            align-items: center; justify-content: center;
+        }
+        .info-icon svg { width: 18px; height: 18px; color: var(--gold); }
+        .info-grid .info-label { color: var(--text-tertiary); font-size: 0.72rem; letter-spacing: 0.3px; line-height: 1.3; }
+        .info-grid .info-value { color: var(--ink); font-weight: 500; line-height: 1.3; }
+
+        /* ═══════════════ Timeline ═══════════════ */
+        .timeline { position: relative; padding-left: 2rem; }
+        .timeline::before {
+            content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+            width: 1px; background: linear-gradient(180deg, var(--gold) 0%, var(--border) 70%);
+        }
+        .tl-item { position: relative; margin-bottom: 3rem; padding-left: 2.5rem; }
+        .tl-item:last-child { margin-bottom: 0; }
+        .tl-item::before {
+            content: ''; position: absolute; left: -2rem; top: 4px;
+            width: 11px; height: 11px; border-radius: 50%;
+            background: #fff; border: 2px solid var(--gold);
+            box-shadow: 0 0 0 4px rgba(184,134,11,0.07);
+            transition: all 0.3s ease;
+        }
+        .tl-item:hover::before { border-color: var(--gold-light); box-shadow: 0 0 0 8px rgba(184,134,11,0.10); }
+        .tl-date {
+            font-size: 0.78rem; color: var(--gold); font-weight: 700;
+            margin-bottom: 0.2rem; letter-spacing: 0.8px;
+        }
+        .tl-item h4 { font-size: 1.08rem; color: var(--ink); margin-bottom: 0.15rem; font-weight: 700; letter-spacing: 0.3px; }
+        .tl-org { font-size: 0.86rem; color: var(--text-tertiary); margin-bottom: 0.6rem; }
+        .tl-details { list-style: none; padding: 0; }
+        .tl-details li {
+            position: relative; padding-left: 1rem; color: var(--text-secondary);
+            font-size: 0.85rem; margin-bottom: 0.3rem; line-height: 1.7;
+        }
+        .tl-details li::before {
+            content: ''; position: absolute; left: 0; top: 0.6em;
+            width: 4px; height: 1px; background: var(--gold-light); border-radius: 1px;
+        }
+        .tl-details li strong { color: var(--ink); font-weight: 600; }
+
+        /* ═══════════════ Project Grid ═══════════════ */
+        .proj-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+        .proj-card {
+            background: var(--surface); border-radius: var(--radius-lg); padding: 2rem 1.8rem;
+            box-shadow: var(--shadow-xs); border: 1px solid var(--border-light);
+            transition: all 0.4s var(--ease); position: relative; overflow: hidden;
+        }
+        .proj-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+            background: linear-gradient(90deg, var(--gold), var(--gold-light));
+            opacity: 0; transition: opacity 0.4s var(--ease);
+        }
+        .proj-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-3px); border-color: transparent; }
+        .proj-card:hover::before { opacity: 1; }
+        .proj-date {
+            font-size: 0.76rem; color: var(--gold); font-weight: 700;
+            letter-spacing: 0.8px; margin-bottom: 0.6rem;
+        }
+        .proj-card h4 { font-size: 1.05rem; color: var(--ink); margin-bottom: 0.3rem; font-weight: 700; }
+        .proj-role { font-size: 0.8rem; color: var(--text-tertiary); font-weight: 600; margin-bottom: 0.6rem; }
+        .proj-card p { color: var(--text-secondary); font-size: 0.85rem; line-height: 1.75; }
+
+        /* ═══════════════ Card Grid (Skills / Honors) ═══════════════ */
+        .card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+        .card {
+            background: var(--surface); border-radius: var(--radius-lg);
+            padding: 2.2rem 1.5rem; box-shadow: var(--shadow-xs);
+            border: 1px solid var(--border-light); transition: all 0.4s var(--ease);
+            position: relative; overflow: hidden; text-align: center;
+        }
+        .card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+            background: linear-gradient(90deg, var(--gold), var(--gold-light));
+            opacity: 0; transition: opacity 0.4s var(--ease);
+        }
+        .card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: transparent; }
+        .card:hover::before { opacity: 1; }
+        .card-icon {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 52px; height: 52px; border-radius: 14px; margin-bottom: 1.1rem;
+            background: var(--gold-wash);
+            transition: all 0.4s var(--ease);
+        }
+        .card-icon svg { width: 26px; height: 26px; color: var(--gold); }
+        .card:hover .card-icon { background: var(--gold-pale); transform: scale(1.05); }
+        .card h4 { font-size: 1.02rem; color: var(--ink); margin-bottom: 1rem; font-weight: 700; letter-spacing: 0.5px; }
+        .card ul { list-style: none; text-align: left; }
+        .card ul li {
+            padding: 0.4rem 0; color: var(--text-secondary); font-size: 0.84rem;
+            border-bottom: 1px solid var(--border-light); transition: padding 0.3s ease;
+        }
+        .card ul li:last-child { border-bottom: none; }
+        .card ul li::before { content: '— '; color: var(--gold-light); font-size: 0.65rem; }
+        .card:hover ul li { padding-left: 3px; }
+        .card.is-featured {
+            border-color: rgba(184,134,11,0.20);
+            background: linear-gradient(180deg, rgba(184,134,11,0.025) 0%, #fff 35%);
+        }
+        .card.is-featured::before { opacity: 1 !important; }
+        .card-action {
+            display: inline-block; margin-top: 0.9rem; padding: 0.35rem 1rem;
+            background: transparent; border: 1px solid var(--gold); color: var(--gold);
+            border-radius: 20px; font-size: 0.78rem; cursor: pointer;
+            transition: all 0.3s ease; letter-spacing: 0.5px; font-weight: 600;
+            text-decoration: none; font-family: inherit;
+        }
+        .card-action:hover { background: var(--gold); color: #fff; }
+
+        /* ═══════════════ Modal ═══════════════ */
         .modal-overlay {
             position: fixed; inset: 0; z-index: 9999;
-            background: rgba(10,25,41,0.85); backdrop-filter: blur(8px);
+            background: rgba(10,25,41,0.82); backdrop-filter: blur(10px);
             display: flex; align-items: center; justify-content: center;
             opacity: 0; pointer-events: none; transition: opacity 0.35s ease;
         }
@@ -135,29 +358,35 @@
         .modal {
             background: var(--surface); border-radius: var(--radius-lg);
             max-width: 820px; width: 92%; max-height: 88vh; overflow-y: auto;
-            padding: 2.8rem 2.5rem; box-shadow: var(--shadow-lg);
-            position: relative;
+            padding: 2.8rem 2.5rem; box-shadow: var(--shadow-lg); position: relative;
         }
         .modal-close {
             position: absolute; top: 1.2rem; right: 1.5rem;
             width: 40px; height: 40px; border-radius: 50%;
             border: 1px solid var(--border); background: #fff;
             font-size: 1.2rem; cursor: pointer; color: var(--text-secondary);
-            transition: var(--transition); display: flex; align-items: center; justify-content: center;
+            transition: all 0.3s ease; display: flex; align-items: center; justify-content: center;
+            line-height: 1;
         }
         .modal-close:hover { background: var(--ink); color: #fff; border-color: var(--ink); }
-        .modal h3 { font-size: 1.4rem; color: var(--ink); margin-bottom: 1.5rem; font-weight: 700; letter-spacing: 0.5px; }
-        .modal-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; margin-bottom: 2rem; }
+        .modal h3 { font-size: 1.35rem; color: var(--ink); margin-bottom: 1.5rem; font-weight: 700; letter-spacing: 0.5px; }
+        .modal-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem; }
         .modal-stat {
             text-align: center; padding: 1.5rem 1rem; background: var(--gold-pale);
-            border-radius: var(--radius); border: 1px solid rgba(184,134,11,0.15);
+            border-radius: var(--radius); border: 1px solid rgba(184,134,11,0.12);
+            transition: transform 0.3s ease;
         }
+        .modal-stat:hover { transform: translateY(-2px); }
         .modal-stat .num { font-size: 2rem; font-weight: 800; color: var(--gold); letter-spacing: 1px; }
-        .modal-stat .lbl { font-size: 0.78rem; color: var(--text-tertiary); margin-top: 0.3rem; letter-spacing: 0.5px; }
-        .modal-images { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-top: 1.2rem; }
+        .modal-stat .lbl { font-size: 0.76rem; color: var(--text-tertiary); margin-top: 0.3rem; letter-spacing: 0.5px; }
+        .modal-body {
+            color: var(--text-secondary); font-size: 0.9rem; line-height: 1.85; margin-bottom: 1.5rem;
+        }
+        .modal-body strong { color: var(--ink); font-weight: 600; }
+        .modal-images { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-top: 0.5rem; }
         .modal-images img {
             width: 100%; border-radius: var(--radius); border: 1px solid var(--border-light);
-            cursor: pointer; transition: var(--transition);
+            cursor: pointer; transition: all 0.35s var(--ease); display: block;
         }
         .modal-images img:hover { transform: scale(1.02); box-shadow: var(--shadow); }
         .modal-images .img-placeholder {
@@ -165,207 +394,102 @@
             border: 2px dashed var(--border); display: flex; align-items: center;
             justify-content: center; color: var(--text-tertiary); font-size: 0.85rem;
         }
-        .modal .invest-link-btn {
-            display: inline-block; margin-top: 0.6rem; padding: 0.35rem 1rem;
-            background: transparent; border: 1px solid var(--gold); color: var(--gold);
-            border-radius: 20px; font-size: 0.8rem; cursor: pointer;
-            transition: var(--transition); letter-spacing: 0.5px; font-weight: 600;
-            text-decoration: none;
-        }
-        .modal .invest-link-btn:hover { background: var(--gold); color: #fff; }
-
-
-        /* ── 通用板块 ── */
-        .section { max-width: 1140px; margin: 0 auto; padding: 90px 2.5rem; }
-        .section-alt { background: #fff; border-top: 1px solid var(--border-light); border-bottom: 1px solid var(--border-light); }
-        .section-title { text-align: center; margin-bottom: 3.5rem; }
-        .section-title h2 {
-            font-size: 1.8rem; color: var(--ink); font-weight: 700;
-            letter-spacing: 1px; display: inline-block; position: relative;
-        }
-        .section-title h2::after {
-            content: ''; position: absolute; bottom: -12px; left: 50%; transform: translateX(-50%);
-            width: 40px; height: 2px; background: var(--gold); border-radius: 1px;
-        }
-        .section-title p {
-            color: var(--text-tertiary); margin-top: 1.4rem; font-size: 0.9rem; letter-spacing: 0.5px;
+        .modal-caption {
+            font-size: 0.76rem; color: var(--text-tertiary);
+            letter-spacing: 0.5px; margin-bottom: 0.8rem;
         }
 
-        /* ── 关于我 ── */
-        .about-grid { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 4rem; align-items: start; }
-        .about-image-wrapper {
-            position: sticky; top: 110px; border-radius: var(--radius-lg); overflow: hidden;
-            width: 72%; margin: 0 auto;
-            aspect-ratio: 2/3; background: linear-gradient(160deg, var(--navy-light), var(--ink));
-            box-shadow: var(--shadow-lg);
-        }
-        .about-image-wrapper img { width: 100%; height: 100%; object-fit: cover; }
-        .about-content h3 { font-size: 1.55rem; color: var(--ink); margin-bottom: 1.2rem; font-weight: 700; letter-spacing: 0.5px; }
-        .about-content .greeting { font-size: 1rem; color: var(--gold); font-weight: 600; margin-bottom: 0.6rem; letter-spacing: 0.5px; }
-        .about-content p { color: var(--text-secondary); margin-bottom: 1.1rem; font-size: 0.93rem; }
-        .info-list { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-top: 1.8rem; }
-        .info-list li { display: flex; align-items: center; gap: 0.7rem; font-size: 0.88rem; }
-        .info-list .info-icon {
-            width: 40px; height: 40px; border-radius: 12px;
-            background: var(--gold-pale); display: flex;
-            align-items: center; justify-content: center; font-size: 1.05rem; flex-shrink: 0;
-        }
-        .info-list .info-label { color: var(--text-tertiary); font-size: 0.76rem; letter-spacing: 0.3px; }
-
-        /* ── 时间线 ── */
-        .timeline { position: relative; padding-left: 2.5rem; }
-        .timeline::before {
-            content: ''; position: absolute; left: 0; top: 0; bottom: 0;
-            width: 1px; background: linear-gradient(180deg, var(--gold), var(--border) 70%);
-        }
-        .timeline-item { position: relative; margin-bottom: 3rem; padding-left: 2.5rem; }
-        .timeline-item:last-child { margin-bottom: 0; }
-        .timeline-item::before {
-            content: ''; position: absolute; left: -2.5rem; top: 4px;
-            width: 12px; height: 12px; border-radius: 50%;
-            background: #fff; border: 2px solid var(--gold);
-            box-shadow: 0 0 0 4px rgba(184,134,11,0.08);
-        }
-        .timeline-item .year {
-            font-size: 0.8rem; color: var(--gold); font-weight: 700;
-            margin-bottom: 0.25rem; letter-spacing: 0.8px; text-transform: uppercase;
-        }
-        .timeline-item h4 { font-size: 1.1rem; color: var(--ink); margin-bottom: 0.2rem; font-weight: 700; }
-        .timeline-item .org { font-size: 0.88rem; color: var(--text-tertiary); margin-bottom: 0.5rem; }
-        .timeline-item ul { margin-top: 0.5rem; padding-left: 1.2rem; }
-        .timeline-item ul li { color: var(--text-secondary); font-size: 0.86rem; margin-bottom: 0.3rem; }
-
-        /* ── 卡片 ── */
-        .card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
-        .card {
-            background: var(--surface); border-radius: var(--radius-lg);
-            padding: 2.2rem 1.6rem; box-shadow: var(--shadow-xs);
-            border: 1px solid var(--border-light); transition: var(--transition); text-align: center;
-            position: relative; overflow: hidden;
-        }
-        .card::before {
-            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
-            background: linear-gradient(90deg, var(--gold), var(--gold-light));
-            opacity: 0; transition: var(--transition);
-        }
-        .card:hover::before { opacity: 1; }
-        .card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); border-color: transparent; }
-        .card-icon { font-size: 2.2rem; margin-bottom: 1rem; }
-        .card h4 { font-size: 1.05rem; color: var(--ink); margin-bottom: 1rem; font-weight: 700; letter-spacing: 0.5px; }
-        .card ul { list-style: none; text-align: left; }
-        .card ul li {
-            padding: 0.4rem 0; color: var(--text-secondary); font-size: 0.85rem;
-            border-bottom: 1px solid var(--border-light);
-            transition: var(--transition);
-        }
-        .card ul li:last-child { border-bottom: none; }
-        .card ul li::before { content: '— '; color: var(--gold-light); font-size: 0.7rem; }
-        .card:hover ul li { padding-left: 4px; }
-        .card-featured { border-color: rgba(184,134,11,0.25); background: linear-gradient(180deg, rgba(184,134,11,0.03) 0%, #fff 35%); }
-        .card-featured::before { opacity: 1 !important; }
-
-        /* ── 项目卡片 ── */
-        .project-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
-        .project-card {
-            background: var(--surface); border-radius: var(--radius-lg); padding: 2rem;
-            box-shadow: var(--shadow-xs); border: 1px solid var(--border-light);
-            transition: var(--transition); position: relative;
-        }
-        .project-card::after {
-            content: ''; position: absolute; bottom: 0; left: 2rem; right: 2rem; height: 1px;
-            background: linear-gradient(90deg, transparent, var(--gold-light), transparent);
-            opacity: 0; transition: var(--transition);
-        }
-        .project-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-3px); }
-        .project-card:hover::after { opacity: 0.6; }
-        .project-card .project-period {
-            font-size: 0.78rem; color: var(--gold); font-weight: 700;
-            letter-spacing: 0.8px; margin-bottom: 0.6rem;
-        }
-        .project-card h4 { font-size: 1.05rem; color: var(--ink); margin-bottom: 0.6rem; font-weight: 700; }
-        .project-card p { color: var(--text-secondary); font-size: 0.86rem; line-height: 1.7; }
-
-        /* ── 联系方式 ── */
+        /* ═══════════════ Contact ═══════════════ */
         #contact {
             background: linear-gradient(175deg, #091520 0%, #0f2538 100%);
             color: #fff; position: relative;
         }
         #contact::before {
             content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
-            background: linear-gradient(90deg,transparent,rgba(184,134,11,0.4),transparent);
+            background: linear-gradient(90deg,transparent,rgba(184,134,11,0.35),transparent);
         }
-        #contact .section-title h2 { color: #fff; }
-        #contact .section-title p { color: rgba(255,255,255,0.55); }
+        #contact .section-head h2 { color: #fff; }
+        #contact .section-head p { color: rgba(255,255,255,0.50); }
         .contact-grid { display: grid; grid-template-columns: 1fr auto; gap: 4rem; align-items: center; }
-        .contact-info { display: flex; flex-direction: column; gap: 0.85rem; }
+        .contact-list { display: flex; flex-direction: column; gap: 0.7rem; }
         .contact-item {
             display: flex; align-items: center; gap: 1rem;
-            padding: 0.95rem 1.3rem; background: rgba(255,255,255,0.04);
-            border-radius: var(--radius); border: 1px solid rgba(255,255,255,0.08);
-            transition: var(--transition); text-decoration: none; color: #fff;
+            padding: 1rem 1.3rem; background: rgba(255,255,255,0.035);
+            border-radius: var(--radius); border: 1px solid rgba(255,255,255,0.07);
+            transition: all 0.35s var(--ease); text-decoration: none; color: #fff;
         }
-        a.contact-item:hover { background: rgba(255,255,255,0.1); transform: translateX(6px); border-color: rgba(184,134,11,0.3); }
+        a.contact-item:hover {
+            background: rgba(255,255,255,0.09); transform: translateX(6px);
+            border-color: rgba(184,134,11,0.25);
+        }
         .contact-item-icon {
-            width: 44px; height: 44px; border-radius: 12px;
-            background: rgba(184,134,11,0.25); display: flex;
-            align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0;
+            width: 44px; height: 44px; border-radius: 12px; flex-shrink: 0;
+            background: rgba(184,134,11,0.20); display: flex;
+            align-items: center; justify-content: center;
         }
+        .contact-item-icon svg { width: 20px; height: 20px; color: var(--gold-light); }
         .contact-item-text .label {
-            font-size: 0.72rem; color: rgba(255,255,255,0.4);
+            font-size: 0.7rem; color: rgba(255,255,255,0.38);
             text-transform: uppercase; letter-spacing: 1.8px; margin-bottom: 2px;
         }
-        .contact-item-text .value { font-size: 0.98rem; font-weight: 500; letter-spacing: 0.3px; }
+        .contact-item-text .value { font-size: 0.96rem; font-weight: 500; letter-spacing: 0.3px; }
 
-        /* ── 页脚 ── */
+        /* ═══════════════ Footer ═══════════════ */
         .footer {
             text-align: center; padding: 2.5rem;
-            color: rgba(255,255,255,0.35); font-size: 0.78rem;
+            color: rgba(255,255,255,0.32); font-size: 0.76rem;
             background: #060f18; letter-spacing: 0.5px;
         }
+        .footer p + p { margin-top: 0.35rem; }
 
-        /* ── 动画 ── */
-        .fade-in { opacity: 0; transform: translateY(36px); transition: opacity 0.8s ease, transform 0.8s ease; }
+        /* ═══════════════ Animation ═══════════════ */
+        .fade-in {
+            opacity: 0; transform: translateY(36px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
         .fade-in.visible { opacity: 1; transform: translateY(0); }
 
-        /* ── 响应式 ── */
+        /* ═══════════════ Responsive ═══════════════ */
         @media (max-width: 1024px) {
             .card-grid { grid-template-columns: repeat(2, 1fr); }
-            .project-grid { grid-template-columns: 1fr; }
+            .proj-grid { grid-template-columns: 1fr; }
             .modal-stats { grid-template-columns: repeat(2, 1fr); }
             .modal-images { grid-template-columns: 1fr; }
         }
         @media (max-width: 768px) {
-            .navbar { padding: 0 1.5rem; }
+            .navbar { padding: 0 1.2rem; }
             .nav-links {
-                display: none; position: absolute; top: 70px; left: 0; right: 0;
+                display: none; position: absolute; top: 68px; left: 0; right: 0;
                 flex-direction: column; background: rgba(255,255,255,0.98);
                 padding: 1rem 2rem 1.5rem; gap: 1rem;
-                border-bottom: 1px solid var(--border); box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+                border-bottom: 1px solid var(--border);
+                box-shadow: 0 12px 28px rgba(0,0,0,0.08);
                 backdrop-filter: blur(14px);
             }
             .nav-links.open { display: flex; }
             .nav-toggle { display: flex; }
             .hero { padding: 130px 1.2rem 70px; }
-            .hero h1 { font-size: 2.2rem; letter-spacing: 2px; }
-            .hero-avatar { width: 120px; height: 120px; }
+            .hero h1 { font-size: 2.2rem; letter-spacing: 3px; }
+            .hero-avatar { width: 110px; height: 110px; }
             .about-grid { grid-template-columns: 1fr; gap: 2rem; }
-            .about-image-wrapper { position: static; max-width: 280px; }
+            .about-image-wrap { position: static; max-width: 260px; }
             .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
             .card-grid { grid-template-columns: 1fr; }
             .modal-stats { grid-template-columns: 1fr; }
             .modal-images { grid-template-columns: 1fr; }
             .modal { padding: 1.8rem 1.2rem; }
-            .info-list { grid-template-columns: 1fr; }
-            .section { padding: 55px 1.2rem; }
+            .info-grid { grid-template-columns: 1fr; }
+            .section-wrap { padding: 60px 1.2rem; }
+            .tl-item { padding-left: 2rem; }
         }
     </style>
 </head>
 <body>
 
-<!-- ═══════════════ 导航栏 ═══════════════ -->
+<!-- ═══════════════ Navigation ═══════════════ -->
 <nav class="navbar" id="navbar">
     <div class="navbar-inner">
-        <a href="#" class="nav-logo">李浩祥<span>.</span></a>
+        <a href="#" class="nav-logo">李浩祥<span class="dot">.</span></a>
         <button class="nav-toggle" id="navToggle" aria-label="菜单">
             <span></span><span></span><span></span>
         </button>
@@ -377,6 +501,10 @@
             <li><a href="#skills">专业技能</a></li>
             <li><a href="#honors">荣誉奖项</a></li>
             <li><a href="#contact">联系方式</a></li>
+            <li><a class="nav-cta" href="李浩祥简历.pdf" download>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                简历 PDF
+            </a></li>
         </ul>
     </div>
 </nav>
@@ -387,110 +515,129 @@
         <img class="hero-avatar"
              src="微信图片_20250803114711.jpg"
              alt="李浩祥"
-             onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22152%22 height=%22152%22%3E%3Crect fill=%22%231a3d5c%22 width=%22152%22 height=%22152%22/%3E%3Ctext x=%2276%22 y=%2282%22 text-anchor=%22middle%22 fill=%22%23d4a84b%22 font-size=%2252%22 font-family=%22sans-serif%22%3E李%3C/text%3E%3C/svg%3E';">
+             onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22140%22 height=%22140%22%3E%3Crect fill=%22%231a3d5c%22 width=%22140%22 height=%22140%22/%3E%3Ctext x=%2270%22 y=%2276%22 text-anchor=%22middle%22 fill=%22%23d4a84b%22 font-size=%2248%22 font-family=%22sans-serif%22%3E李%3C/text%3E%3C/svg%3E';">
         <h1>李 浩 祥</h1>
         <div class="divider"></div>
         <p class="subtitle">金融学专业 · 2026 届应届毕业生</p>
         <p class="school">广西师范大学 · 经济管理学院</p>
+        <p class="hero-stats">模拟盘三个月 <strong>+100%</strong> 收益 &nbsp;·&nbsp; ETF 挑战赛 <strong>全国第四</strong> &nbsp;·&nbsp; 自主搭建 <strong>金融 AI Agent</strong></p>
         <div class="hero-tags">
-            <span class="hero-tag highlight">证券投资</span>
             <span class="hero-tag highlight">价值投资</span>
+            <span class="hero-tag highlight">基本面分析</span>
             <span class="hero-tag">AI 金融工具</span>
-            <span class="hero-tag">金融 Agent 开发</span>
             <span class="hero-tag">财务分析</span>
             <span class="hero-tag">影像制作</span>
         </div>
+        <a class="hero-dl" href="李浩祥简历.pdf" download>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            下载简历 PDF
+        </a>
     </div>
 </section>
 
 <!-- ═══════════════ 关于我 ═══════════════ -->
-<section class="section" id="about">
-    <div class="section-title fade-in">
-        <h2>关于我</h2>
-        <p>价值投资者 · 风控为先 · 积极好学</p>
-    </div>
-    <div class="about-grid">
-        <div class="about-image-wrapper fade-in">
-            <img src="微信图片_20250803114711.jpg" alt="李浩祥"
-                 style="width:100%;height:100%;object-fit:cover;"
-                 onerror="this.parentElement.innerHTML='<div style=text-align:center;color:rgba(255,255,255,0.6);padding-top:60%;font-size:1rem;>📸</div>';">
+<section id="about">
+    <div class="section-wrap">
+        <div class="section-head fade-in">
+            <h2>关于我</h2>
+            <p>价值投资者 · 风控为先 · 积极好学</p>
         </div>
-        <div class="about-content fade-in">
-            <p class="greeting">你好，很高兴认识你</p>
-            <h3>我是李浩祥，金融学应届毕业生 & 价值投资者</h3>
-            <p>
-                就读于<strong>广西师范大学经济管理学院金融学专业</strong>，将于 2026 年 7 月毕业。在校期间系统学习了<strong>公司金融、投资学、金融工程、统计学、会计学、财务报表分析、金融风险管理、经济学</strong>等核心课程，具备扎实的金融理论基础与数据分析能力。
-            </p>
-            <p>
-                性格开朗亲和、责任心强，做事稳重细致。具备<strong>宏观经济视野</strong>与<strong>逻辑分析能力</strong>，长期关注财经资讯与资本市场动态。践行<strong>巴菲特芒格式价值投资理念</strong>，以龙头股和宽基 ETF 为主要交易品种，已建立<strong>自有交易系统与买入逻辑</strong>，形成了"进攻+防御"双板块资产组合体系，严格仓位管理与风险控制，拒绝频繁交易、克制人性弱点。
-            </p>
-            <p>
-                同花顺模拟盘<strong>三个月实现 100% 收益</strong>，第二届"长城杯"ETF 模拟挑战赛<strong>月排名全国第四</strong>（校级第一），交易过中际旭创等龙头标的。善于通过基本面分析筛选优质企业，结合技术指标判断买卖时机。
-            </p>
-            <p>
-                深度掌握 AI 工具链，熟练运用 <strong>Claude Code、Codex、Hermes</strong> 等前沿 AI 平台，能够高效完成数据检索、处理与深度分析。自主搭建<strong>专属金融 Agent</strong>，实现金融数据的智能采集、清洗、建模与可视化，大幅提升投研效率与决策质量。
-            </p>
-            <ul class="info-list">
-                <li><div class="info-icon">🎂</div><div><div class="info-label">年龄</div><div>21 岁</div></div></li>
-                <li><div class="info-icon">📍</div><div><div class="info-label">籍贯</div><div>陕西省汉中市</div></div></li>
-                <li><div class="info-icon">🎓</div><div><div class="info-label">学历</div><div>本科 · 金融学</div></div></li>
-                <li><div class="info-icon">📧</div><div><div class="info-label">邮箱</div><div>1486873060@qq.com</div></div></li>
-                <li><div class="info-icon">📱</div><div><div class="info-label">手机</div><div>18891618651</div></div></li>
-                <li><div class="info-icon">🏫</div><div><div class="info-label">在校职务</div><div>班级生活委员</div></div></li>
-                <li><div class="info-icon">🗣</div><div><div class="info-label">普通话</div><div>二级甲等</div></div></li>
-                <li><div class="info-icon">🚗</div><div><div class="info-label">驾照</div><div>C1 驾驶证</div></div></li>
-            </ul>
+        <div class="about-grid">
+            <div class="about-image-wrap fade-in">
+                <img src="微信图片_20250803114711.jpg" alt="李浩祥"
+                     onerror="this.parentElement.innerHTML='<div style=text-align:center;color:rgba(255,255,255,0.6);padding-top:60%;font-size:1rem;>照片</div>';">
+            </div>
+            <div class="about-text fade-in">
+                <p class="greeting">你好，很高兴认识你</p>
+                <h3>李浩祥，金融学应届毕业生 & 价值投资者</h3>
+                <p>
+                    就读于<strong>广西师范大学经济管理学院金融学专业</strong>（2026 年 7 月毕业），系统学习<strong>公司金融、投资学、金融工程、统计学、会计学、财务报表分析、金融风险管理、经济学</strong>等核心课程，具备扎实的金融理论基础与数据分析能力。
+                </p>
+                <p>
+                    践行<strong>巴菲特芒格式价值投资理念</strong>，以龙头股和宽基 ETF 为主要交易品种，已建立<strong>自有交易系统与买入逻辑</strong>，形成「进攻+防御」双板块资产组合体系，严格仓位管理与风险控制。<strong>同花顺模拟盘三个月实现 100% 收益</strong>，第二届「长城杯」ETF 模拟挑战赛<strong>月排名全国第四</strong>（校级第一），善于通过基本面分析筛选优质企业，结合技术指标判断买卖时机。
+                </p>
+                <p>
+                    深度掌握 AI 工具链，熟练运用 <strong>Claude Code、Codex、Hermes</strong> 等前沿平台进行数据检索与深度分析。自主搭建<strong>专属金融 Agent</strong>，实现金融数据智能采集、清洗、建模与可视化，大幅提升投研效率与决策质量。
+                </p>
+                <ul class="info-grid">
+                    <li>
+                        <div class="info-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+                        <div><div class="info-label">年龄</div><div class="info-value">21 岁</div></div>
+                    </li>
+                    <li>
+                        <div class="info-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+                        <div><div class="info-label">籍贯</div><div class="info-value">陕西省汉中市</div></div>
+                    </li>
+                    <li>
+                        <div class="info-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 2 6 3 6 3s6-1 6-3v-5"/></svg></div>
+                        <div><div class="info-label">学历</div><div class="info-value">本科 · 金融学</div></div>
+                    </li>
+                    <li>
+                        <div class="info-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+                        <div><div class="info-label">在校职务</div><div class="info-value">班级生活委员</div></div>
+                    </li>
+                    <li>
+                        <div class="info-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg></div>
+                        <div><div class="info-label">普通话</div><div class="info-value">二级甲等</div></div>
+                    </li>
+                    <li>
+                        <div class="info-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="17" r="2"/><circle cx="16" cy="8" r="2"/><circle cx="5" cy="8" r="2"/><circle cx="18" cy="13" r="2"/><path d="M8 17l1.5-3M16 8l-2 4M5 8l3 6M18 13l-4-2"/></svg></div>
+                        <div><div class="info-label">驾照</div><div class="info-value">C1 驾驶证</div></div>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 </section>
 
 <!-- ═══════════════ 教育 & 实习 ═══════════════ -->
 <section class="section-alt" id="education">
-    <div class="section">
-        <div class="section-title fade-in">
+    <div class="section-wrap">
+        <div class="section-head fade-in">
             <h2>教育背景 & 实习经历</h2>
             <p>学以致用 · 知行合一 · 以战养学</p>
         </div>
         <div class="timeline fade-in">
-            <div class="timeline-item">
-                <div class="year">2022.09 — 2026.07</div>
+            <div class="tl-item">
+                <div class="tl-date">2022.09 — 2026.07</div>
                 <h4>广西师范大学 · 经济管理学院</h4>
-                <div class="org">金融学 本科</div>
-                <ul>
+                <div class="tl-org">金融学 本科</div>
+                <ul class="tl-details">
                     <li>主修：公司金融、投资学、会计学、金融工程、统计学、财务报表分析、金融风险管理、经济学</li>
                     <li>课外持续钻研<strong>价值投资理论与实践</strong>，自主建立交易系统与买入逻辑，以龙头股和宽基 ETF 为主线</li>
-                    <li>担任班级生活委员（2024.09 — 2026.06），负责班级日常事务、政策宣传、材料审核及奖学金申报</li>
+                    <li>2024-2026 学年担任班级生活委员，负责同学生活学习及评奖评优工作</li>
                     <li>长期参与校内外宣传活动，善于组织策划行业宣传展示，并进行拍摄制作与推广报道</li>
                 </ul>
             </div>
-            <div class="timeline-item">
-                <div class="year">2025.09 — 2025.11</div>
+            <div class="tl-item">
+                <div class="tl-date">2025.09 — 2025.11</div>
                 <h4>东北证券股份有限公司</h4>
-                <div class="org">桂林七星路营业部 · 证券业务实习生</div>
-                <ul>
+                <div class="tl-org">桂林七星路营业部 · 证券业务实习生</div>
+                <ul class="tl-details">
                     <li>深入学习证券公司业务流程，系统掌握<strong>经纪业务、投资咨询、产品销售</strong>等核心业务模块</li>
                     <li>协助客户分析<strong>财报信息与市场走势</strong>，运用基本面分析方法筛选优质标的，制定个性化投资计划</li>
                     <li>每日跟踪收集市场资讯与行业动态，对重点板块进行<strong>产业链分析与趋势研判</strong>，按科目分类归档整理</li>
                     <li>协助开展客户接待、联络咨询、平台维护和日常事务处理，积累了<strong>一线客户服务经验</strong></li>
                 </ul>
             </div>
-            <div class="timeline-item">
-                <div class="year">2025.07 — 2025.09</div>
+            <div class="tl-item">
+                <div class="tl-date">2025.07 — 2025.09</div>
                 <h4>广西师范大学出版社集团</h4>
-                <div class="org">市场与财务分析实习生</div>
-                <ul>
+                <div class="tl-org">市场与财务分析实习生</div>
+                <ul class="tl-details">
                     <li>协助统计业务线销售及成本数据，参与搭建财务监测模板，识别运营风险</li>
                     <li>收集整理行业定价策略、渠道信息及竞品动态，深度参与市场调研，编制调研报告</li>
                     <li>参与编制品牌推广方案，剪辑宣传视频，开展市场促销活动</li>
                 </ul>
             </div>
-            <div class="timeline-item">
-                <div class="year">2023.01 — 2025.07</div>
-                <h4>校园志愿服务活动</h4>
-                <div class="org">志愿者</div>
-                <ul>
-                    <li>长期投身校园迎新、会务支持、活动宣传等志愿服务，负责现场引导、后勤保障及影像记录</li>
-                    <li>协助略阳县东关小学图书采购项目，参与投资测算、方案制定与项目实施监控</li>
+            <div class="tl-item">
+                <div class="tl-date"></div>
+                <h4>校园经历</h4>
+                <div class="tl-org">志愿服务 · 新生接待 · 班级班干</div>
+                <ul class="tl-details">
+                    <li>担任<strong>班级生活委员</strong>，负责同学生活学习及评奖评优工作，服务意识强</li>
+                    <li>积极参与<strong>新生接待</strong>工作，协助新生报到、宿舍引导及校园适应指导</li>
+                    <li>长期投身校园迎新、会务支持、活动宣传等<strong>志愿服务</strong>，负责现场引导、后勤保障及影像记录</li>
                 </ul>
             </div>
         </div>
@@ -498,49 +645,58 @@
 </section>
 
 <!-- ═══════════════ 项目经历 ═══════════════ -->
-<section class="section" id="projects">
-    <div class="section-title fade-in">
-        <h2>项目经历</h2>
-        <p>在实践中锻炼综合能力</p>
-    </div>
-    <div class="project-grid fade-in">
-        <div class="project-card">
-            <div class="project-period">2025.06 — 2025.08</div>
-            <h4>"萨玛驰" TVC 产品宣传片</h4>
-            <p><strong>项目负责人</strong></p>
-            <p>受"萨玛驰"公司委托，全流程统筹新型鞋垫产品宣传 TVC 的策划与制作。负责客户对接、方案制定、团队组建、任务分配、设备协调、拍摄执行及后期剪辑审核。采用 4K 高清拍摄、微距特写、动态结构动画等技术，精准呈现产品缓震科技、透气材质与人体工学设计卖点，最终高质量交付，显著提升品牌市场认知度。</p>
+<section id="projects">
+    <div class="section-wrap">
+        <div class="section-head fade-in">
+            <h2>项目经历</h2>
+            <p>在实践中锻炼综合能力</p>
         </div>
-        <div class="project-card">
-            <div class="project-period">2024.02 — 2024.04</div>
-            <h4>烟草市场调研项目</h4>
-            <p><strong>核心调研成员</strong></p>
-            <p>加入学院"雪茄吧"项目调研组，联络桂林市烟草专卖局，系统开展烟草行业运营模式、市场行情、政策合规及发展趋势调研。负责资料收集、产业链分析、市场趋势研判及风险评估，基于成本收益与供应链管理提出优化建议，形成具有建设性的行业调研报告。</p>
-        </div>
-        <div class="project-card">
-            <div class="project-period">2023.12 — 2024.01</div>
-            <h4>略阳县东关小学图书采购项目</h4>
-            <p><strong>项目组成员</strong></p>
-            <p>根据预算资金，参与方案规划、采购清单制定与分发办法设计。高效组织采购并精准分发 2000 余册图书，资金使用率高达 98%，图书精准覆盖学校三至六年级班级，显著提升图书资源配置效率。</p>
-        </div>
-        <div class="project-card">
-            <div class="project-period">2023.07 — 2023.08</div>
-            <h4>略阳县旅游业发展调研</h4>
-            <p><strong>调研组成员</strong></p>
-            <p>按照略阳县旅游业发展服务中心计划要求，结合旅游宣传活动，深入开展当地旅游业发展调研。协助编制宣传资料、组织文旅活动、拍摄推广影像、开展宣介咨询，分析产业现状与竞争格局，撰写调研报告，为旅游发展提供理论支持。</p>
+        <div class="proj-grid fade-in">
+            <div class="proj-card">
+                <div class="proj-date">2025.06 — 2025.08</div>
+                <h4>"萨玛驰" TVC 产品宣传片</h4>
+                <div class="proj-role">项目负责人</div>
+                <p>受企业委托全流程统筹产品宣传 TVC 策划与制作。负责<strong>项目预算管理</strong>、客户需求对接、团队组建与进度管控，协调多方资源完成 4K 拍摄与后期制作。项目按时高质量交付，有效提升品牌市场认知度，锻炼了<strong>项目管理与跨部门协调能力</strong>。</p>
+                <a class="card-action" href="https://www.bilibili.com/video/BV1ZctxzREZ9/" target="_blank" rel="noopener">▶ 观看视频</a>
+            </div>
+            <div class="proj-card">
+                <div class="proj-date">2024.02 — 2024.04</div>
+                <h4>烟草行业市场调研项目</h4>
+                <div class="proj-role">核心调研成员</div>
+                <p>加入学院调研组，对接桂林市烟草专卖局，系统调研行业运营模式、市场格局与政策合规。独立负责<strong>产业链成本收益分析、市场趋势研判及风险评估</strong>，结合供应链管理视角提出优化建议，形成具备决策参考价值的行业调研报告。</p>
+            </div>
+            <div class="proj-card">
+                <div class="proj-date">2023.12 — 2024.01</div>
+                <h4>略阳县东关小学图书采购项目</h4>
+                <div class="proj-role">项目组成员</div>
+                <p>根据预算资金制定采购方案与分发计划，高效组织采购并精准分发 2000 余册图书。<strong>资金使用率 98%</strong>，图书精准覆盖目标班级，显著提升资源配置效率，体现了<strong>预算执行与项目落地能力</strong>。</p>
+            </div>
+            <div class="proj-card">
+                <div class="proj-date">2023.11 — 2024.12</div>
+                <h4>《公共预算管理》书作编辑</h4>
+                <div class="proj-role">编辑组成员</div>
+                <p>参与《公共预算管理》书作的编辑工作，负责相关章节的<strong>素材收集、资料整理、文字修订、排版编辑与图表处理</strong>。项目周期跨度一年，系统提升了专业知识和文档编辑水平，锻炼了<strong>细致严谨的文字处理与出版流程把控能力</strong>。</p>
+            </div>
+            <div class="proj-card">
+                <div class="proj-date">2023.07 — 2023.08</div>
+                <h4>略阳县旅游业发展调研</h4>
+                <div class="proj-role">调研组成员</div>
+                <p>配合略阳县旅游业发展服务中心，开展当地旅游业发展调研与文旅宣传活动。参与编制宣传资料、组织文旅活动、<strong>分析产业现状与竞争格局</strong>，撰写调研报告为区域旅游发展提供策略参考。</p>
+            </div>
         </div>
     </div>
 </section>
 
 <!-- ═══════════════ 专业技能 ═══════════════ -->
 <section class="section-alt" id="skills">
-    <div class="section">
-        <div class="section-title fade-in">
+    <div class="section-wrap">
+        <div class="section-head fade-in">
             <h2>专业技能</h2>
             <p>投资为核 · AI 赋能 · 多维发展</p>
         </div>
         <div class="card-grid fade-in">
-            <div class="card card-featured">
-                <div class="card-icon">&#x1F4C8;</div>
+            <div class="card is-featured">
+                <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></div>
                 <h4>投资交易体系</h4>
                 <ul>
                     <li>巴菲特芒格式价值投资理念</li>
@@ -550,10 +706,10 @@
                     <li>K 线图与技术指标分析</li>
                     <li>文华 WH6 专业交易软件</li>
                 </ul>
-                <button class="invest-link-btn" onclick="openInvestModal()" style="margin-top:0.8rem;">&#x1F4CA; 查看战绩详情</button>
+                <button class="card-action" onclick="openInvestModal()">查看战绩详情</button>
             </div>
             <div class="card">
-                <div class="card-icon">&#x1F916;</div>
+                <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
                 <h4>AI 工具与金融科技</h4>
                 <ul>
                     <li>Claude Code / Codex 高效运用</li>
@@ -565,8 +721,8 @@
                 </ul>
             </div>
             <div class="card">
-                <div class="card-icon">&#x1F4BB;</div>
-                <h4>专业技能</h4>
+                <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg></div>
+                <h4>专业能力</h4>
                 <ul>
                     <li>Excel / WPS 数据建模与透视表</li>
                     <li>财务报表分析与解读</li>
@@ -581,81 +737,82 @@
 </section>
 
 <!-- ═══════════════ 荣誉奖项 ═══════════════ -->
-<section class="section" id="honors">
-    <div class="section-title fade-in">
-        <h2>荣誉奖项</h2>
-        <p>以赛促学 · 实战验证</p>
-    </div>
-    <div class="card-grid fade-in">
-        <div class="card card-featured">
-            <div class="card-icon">&#x1F3C6;</div>
-            <h4>投资竞赛</h4>
-            <ul>
-                <li>同花顺模拟盘三个月 100% 收益</li>
-                <li>"长城杯"ETF 挑战赛全国月排名第4</li>
-                <li>第二届"长城杯"ETF 挑战赛第 7 名</li>
-                <li>第一届"长城杯"ETF 挑战赛第九名</li>
-                <li>第二届"长城杯"校级第一</li>
-            </ul>
+<section id="honors">
+    <div class="section-wrap">
+        <div class="section-head fade-in">
+            <h2>荣誉奖项</h2>
+            <p>以赛促学 · 实战验证</p>
         </div>
-        <div class="card">
-            <div class="card-icon">&#x1F4DC;</div>
-            <h4>资格与证书</h4>
-            <ul>
-                <li>证券从业资格（备考中）</li>
-                <li>第六届全国大学生财经素养大赛一等奖</li>
-                <li>全国大学生普通话大赛三等奖</li>
-                <li>普通话二级甲等</li>
-                <li>C1 驾驶证</li>
-            </ul>
-        </div>
-        <div class="card">
-            <div class="card-icon">&#x1F31F;</div>
-            <h4>自我评价</h4>
-            <ul>
-                <li>价值投资理念，纪律性极强</li>
-                <li>宏观经济视野 + 逻辑分析思维</li>
-                <li>熟练运用 AI 工具赋能金融分析</li>
-                <li>证券实盘交易经验，风控优先</li>
-                <li>文字功底扎实，擅长数据分析</li>
-                <li>责任心强，具备服务与大局意识</li>
-            </ul>
+        <div class="card-grid fade-in">
+            <div class="card is-featured">
+                <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg></div>
+                <h4>投资竞赛</h4>
+                <ul>
+                    <li>同花顺模拟盘三个月 100% 收益</li>
+                    <li>第一届"长城杯"ETF 挑战赛全校第九名</li>
+                    <li>第二届"长城杯"ETF 挑战赛全校第 7 名</li>
+                    <li>第二届"长城杯"月排名全国第 4（校级第一）</li>
+                </ul>
+            </div>
+            <div class="card">
+                <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+                <h4>资格与证书</h4>
+                <ul>
+                    <li>证券从业资格（备考中）</li>
+                    <li>第六届全国大学生财经素养大赛一等奖</li>
+                    <li>全国大学生普通话大赛三等奖</li>
+                    <li>普通话二级甲等</li>
+                    <li>C1 驾驶证</li>
+                </ul>
+            </div>
+            <div class="card">
+                <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+                <h4>自我评价</h4>
+                <ul>
+                    <li>价值投资理念，纪律性极强</li>
+                    <li>宏观经济视野 + 逻辑分析思维</li>
+                    <li>熟练运用 AI 工具赋能金融分析</li>
+                    <li>证券实盘交易经验，风控优先</li>
+                    <li>文字功底扎实，擅长数据分析</li>
+                    <li>责任心强，具备服务与大局意识</li>
+                </ul>
+            </div>
         </div>
     </div>
 </section>
 
 <!-- ═══════════════ 联系方式 ═══════════════ -->
 <section id="contact">
-    <div class="section">
-        <div class="section-title fade-in">
+    <div class="section-wrap">
+        <div class="section-head fade-in">
             <h2>联系方式</h2>
             <p>期待与您的交流合作</p>
         </div>
         <div class="contact-grid fade-in">
-            <div class="contact-info">
+            <div class="contact-list">
                 <a class="contact-item" href="mailto:1486873060@qq.com">
-                    <div class="contact-item-icon">✉</div>
+                    <div class="contact-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a2 2 0 0 1-2.06 0L2 7"/></svg></div>
                     <div class="contact-item-text">
                         <div class="label">电子邮箱</div>
                         <div class="value">1486873060@qq.com</div>
                     </div>
                 </a>
                 <a class="contact-item" href="tel:18891618651">
-                    <div class="contact-item-icon">☎</div>
+                    <div class="contact-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div>
                     <div class="contact-item-text">
                         <div class="label">手机号码</div>
                         <div class="value">188-9161-8651</div>
                     </div>
                 </a>
                 <div class="contact-item">
-                    <div class="contact-item-icon">✆</div>
+                    <div class="contact-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div>
                     <div class="contact-item-text">
                         <div class="label">微信号</div>
                         <div class="value">wkwk-Mrt</div>
                     </div>
                 </div>
                 <div class="contact-item">
-                    <div class="contact-item-icon">⌂</div>
+                    <div class="contact-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
                     <div class="contact-item-text">
                         <div class="label">所在城市</div>
                         <div class="value">广西 · 桂林</div>
@@ -667,12 +824,11 @@
     </div>
 </section>
 
-<!-- ═══════════════ 页脚 ═══════════════ -->
 <!-- ═══════════════ 投资战绩弹窗 ═══════════════ -->
 <div class="modal-overlay" id="investModal">
     <div class="modal">
         <button class="modal-close" onclick="closeInvestModal()">&times;</button>
-        <h3>&#x1F4CA; 投资战绩详情</h3>
+        <h3>投资战绩详情</h3>
         <div class="modal-stats">
             <div class="modal-stat">
                 <div class="num">100%</div>
@@ -687,11 +843,11 @@
                 <div class="lbl">进攻+防御双板块 · 对冲风险</div>
             </div>
         </div>
-        <p style="color:var(--text-secondary);font-size:0.9rem;line-height:1.8;margin-bottom:1.5rem;">
+        <div class="modal-body">
             <strong>投资理念：</strong>巴菲特芒格式价值投资，拒绝频繁交易，多控仓、多复盘、多分析，克制人性。以龙头股和宽基 ETF 为主要交易品种，建立<strong>自有交易系统与买入逻辑</strong>——好公司 + 好价格 + 长期持有 = 稳健复利。<br>
             <strong>交易标的：</strong>中际旭创等龙头个股，善于基本面筛选 + 技术指标判断买卖时机。
-        </p>
-        <p style="color:var(--text-tertiary);font-size:0.78rem;letter-spacing:0.5px;margin-bottom:0.8rem;">📸 战绩截图（点击放大）</p>
+        </div>
+        <p class="modal-caption">战绩截图（点击放大）</p>
         <div class="modal-images">
             <a href="0fc6cc8b1c0241de7e0fcd66e4696cb3.jpg" target="_blank">
                 <img src="0fc6cc8b1c0241de7e0fcd66e4696cb3.jpg" alt="投资战绩截图1" style="aspect-ratio:1080/2400;object-fit:cover;" onerror="this.parentElement.innerHTML='<div class=img-placeholder>截图1<br><small>加载失败</small></div>';">
@@ -707,25 +863,26 @@
             </a>
         </div>
     </div>
-</div>
+</section>
 
+<!-- ═══════════════ Footer ═══════════════ -->
 <footer class="footer">
-    <p>© 2026 李浩祥 &nbsp;·&nbsp; 广西师范大学经济管理学院金融学专业 &nbsp;·&nbsp; 价值投资者</p>
-    <p style="margin-top:0.4rem;">感谢您的访问，期待与您进一步交流</p>
+    <p>&copy; 2026 李浩祥 &nbsp;&middot;&nbsp; 广西师范大学经济管理学院金融学专业 &nbsp;&middot;&nbsp; 价值投资者</p>
+    <p>感谢您的访问，期待与您进一步交流</p>
 </footer>
 
 <!-- ═══════════════ JavaScript ═══════════════ -->
 <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
 <script>
 (function() {
-    // 生成微信二维码
+    // 微信二维码
     var c = document.getElementById('qrWechat');
     if (c) {
         (function draw() {
             if (typeof QRCode === 'undefined') { setTimeout(draw, 200); return; }
             new QRCode(c, {
                 text: 'wkwk-Mrt',
-                width: 190, height: 190,
+                width: 180, height: 180,
                 colorDark: '#ffffff', colorLight: 'rgba(0,0,0,0)',
                 correctLevel: QRCode.CorrectLevel.M
             });
